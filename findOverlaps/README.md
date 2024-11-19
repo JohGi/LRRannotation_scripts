@@ -1,4 +1,4 @@
-### Lancement Muse
+### Lancement Muse sur fichiers tests
 ```srun --partition=agap_normal --pty bash```  
 ```git clone git@github.com:JohGi/LRRannotation_scripts.git```  
 ```cd LRRannotation_scripts/findOverlaps```  
