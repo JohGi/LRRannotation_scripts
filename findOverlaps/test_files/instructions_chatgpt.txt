@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+tu pourrais me faire 2 gff d'exemple pour tester mon code ?
+Je voudrais :
+sur un chromosome chr1 +, dans le gff 1 :
+- gène ref_1 entre les positions 30 et 70
+- gène ref_2 entre les positions 80 et 150
+- gène ref_3 entre les positions 600 et 900
+sur un chromosome chr1 -, dans le gff 1 :
+- gène ref_4 entre les positions 50 et 80
+sur un chromosome chr1 +, dans le gff 2 :
+- gène alt_1 entre les positions 10 et 50
+- gène alt_2 entre les positions 55 et 90
+- gène alt_3 entre les positions 100 et 120
+- gène alt_4 entre les positions 500 et 700
+- gène alt_5 entre les positions 800 et 1000
+sur un chromosome chr1 -, dans le gff 2 :
+- gène alt_6 entre les positions 40 et 60
+- gène alt_7 entre les positions 70 et 100
+sur un chromosome 2 + dans le gff1 :
+- gène ref_5 entre les positions 5 et 500
+sur un chromosome 2 + dans le gff2 :
+- gène alt_8 entre les positions 5 et 500
+sur un chromosome 3 + dans le gff1 :
+- gène ref_6 entre les positions 5 et 500
+sur un chromosome 4 + dans le gff2 :
+- gène alt_9 entre les positions 100 et 500
+sur un chromosome 2 - dans le gff1 :
+- gène ref_7 entre les positions 5 et 300
+sur un chromosome 2 - dans le gff2 :
+- gène alt_10 entre les positions 200 et 500
+sur un chromosome 3 - dans le gff1 :
+- gène ref_8 entre les positions 200 et 500
+sur un chromosome 3 - dans le gff2 :
+- gène alt_11 entre les positions 5 et 300
+sur un chromosome 5 + dans le gff1 :
+- gène ref_9 entre les positions 5 et 500
+sur un chromosome 5 + dans le gff2 :
+- gène alt_12 entre les positions 200 et 300
+sur un chromosome 6 + dans le gff1 :
+- gène ref_10 entre les positions 200 et 300
+sur un chromosome 6 + dans le gff2 :
+- gène alt_13 entre les positions 5 et 500
+
+Pour les 2 gff je voudrais que tu mettes un mrna pour chaque gène avec des positions incluses entre les bornes de son gène, juste pour plus de réalisme
+
+Dans le gff1 je voudrais que tu ajoutes pour chaque gène dans la dernière colonne un élément comment= sous ce format :
+comment=Origin:DWSvevo3July_Chr7A_0019939565 / pred:prot2genome / prot-%-ident:0.465585 / prot-%-cov:0.507349 / score:0.507349 / scoreNC:0.507349 / exo_corr:corrected_intron / exo_corr:fix_overlap / Origin-Fam:LRR-RLK / Origin-Class:Canonical / Gene-Class:Non-canonical / noStop / pbFrameshift / unexpectedSplicingSite / stopInFrame;color=2
+il faudrait juste que tu fasses varier le "Gene-Class:Non-canonical" en mettant soit Non-canonical, soit Canonical aléatoirement
+
+---------------------------------------------------------------------------
+
+/!\ il faut vérifier les coordonnées avant de les utiliser, parfois il fait des erreurs/oublie des lignes
+
+Et ensuite il faut remplacer les espaces par des tab :
+sed -i 's/ \{2,\}/\t/g' ref.gff
+sed -i 's/ \{2,\}/\t/g' alt.gff
