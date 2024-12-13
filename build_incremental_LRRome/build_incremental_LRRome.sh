@@ -11,7 +11,7 @@ fi
 
 
 scripts=/home/girodollej/scratch/GeneModelTransfer/SCRIPT
-LRRprofiler_sif=/home/girodollej/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler.sif
+LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler.sif
 
 initial_LRRome=$(realpath /storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/LRRome)
 exp_ref_folder=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3/Data_Package_01_12_22
