@@ -15,7 +15,7 @@ LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRpro
 
 initial_LRRome=$(realpath /storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/LRRome)
 exp_ref_folder=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3/Data_Package_01_12_22
-
+prefix=SVEVO_July
 
 
 ## ------------------------------- FUNCTIONS --------------------------------------------- ##
@@ -123,7 +123,7 @@ write_infos() {
 
   echo -e "\n Input files:" >> LRRome_incremental_build_infos.txt
   echo "- Initial LRRome: "$initial_LRRome >> LRRome_incremental_build_infos.txt
-  echo "- Expertised LRRome: "$exp_LRRome >> LRRome_incremental_build_infos.txt
+  echo "- Expertised gff files in: 01_gff_EXP" >> LRRome_incremental_build_infos.txt
 
   echo -e "\n Output files:" >> LRRome_incremental_build_infos.txt
   echo "- Exp reference fasta file: 02_build_exp_LRRome/LRR_ANNOT/"${new_prefix}".fasta" >> LRRome_incremental_build_infos.txt
@@ -139,14 +139,14 @@ write_infos() {
 
 mkdir -p 02_build_exp_LRRome 03_LRRome
 
-clean_gff $(realpath 01_gff_EXP) DWSvevo3July
+clean_gff $(realpath 01_gff_EXP) $prefix
 
-build_exp_LRRome SVEVO_July $exp_ref_folder
+build_exp_LRRome $prefix $exp_ref_folder
 
 exp_LRRome=$(realpath 02_build_exp_LRRome/LRRome)
 merge_LRRome $initial_LRRome $exp_LRRome 03_LRRome
 
-write_infos SVEVO_July
+write_infos $prefix
 
 
 
