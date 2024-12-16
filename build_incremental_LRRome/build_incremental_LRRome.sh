@@ -14,9 +14,10 @@ scripts=/home/girodollej/scratch/GeneModelTransfer/SCRIPT
 LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler.sif
 
 initial_LRRome=$(realpath /storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/LRRome)
+initial_LRR_gff=$(realpath /storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/Oryza_Nipponbare_IRGSP-1.0_LRR-CR__20220209.gff)
 exp_ref_folder=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3/Data_Package_01_12_22
-prefix=SVEVO_July
-
+exp_prefix=SVEVO_July
+init_prefix=IRGSP
 
 ## ------------------------------- FUNCTIONS --------------------------------------------- ##
 
@@ -116,6 +117,47 @@ merge_LRRome() {         # >> Fills 03_LRRome
   cd - > /dev/null
 }
 
+concat_gff() {         # >> Fills 04_LRRtransfer_inputs
+  echo -e "\n4/ MERGING EXPERTISED AND INITIAL GFF FILES...\n"
+  local init_prefix=$1
+  local exp_prefix=$2
+  local initial_gff=$3
+  cd 04_LRRtransfer_inputs
+
+  cp $initial_gff ${init_prefix}_${exp_prefix}_LRR.gff
+  cat ../02_build_exp_LRRome/LRR_ANNOT/${exp_prefix}_LRR.gff >> ${init_prefix}_${exp_prefix}_LRR.gff
+
+  cd ..
+}
+
+create_info_locus() {         # >> Fills 04_LRRtransfer_inputs
+  echo -e "\n5/ CREATING THE INFO LOCUS FILE...\n"
+  local exp_gff=$1
+  local init_gff=$2
+  local exp_prefix=$3
+  local init_prefix=$4
+
+  cd 04_LRRtransfer_inputs
+
+  grep "gene" $init_gff | sed -e 's/.*ID=//' -e 's/;Fam=/\t/' -e 's/;Class=/\t/' > ${init_prefix}_${exp_prefix}_info_locus.txt
+
+  awk -F '\t' 'BEGIN{OFS="\t"}{
+    if ($3 == "gene"){
+      gene_id=gensub(/ID=/, "", 1, $9)
+      gene_id=gensub(/;.*/, "", 1, gene_id)
+
+      FAM=gensub(/.*Fam=/, "", 1, $9)
+      FAM=gensub(/ .*/, "", 1, FAM)
+
+      GC=gensub(/.*Gene-Class:/, "", 1, $9)
+      GC=gensub(/ .*/, "", 1, GC)
+
+      print gene_id, FAM, GC
+    }
+  }' $exp_gff >> ${init_prefix}_${exp_prefix}_info_locus.txt
+
+  cd ..
+}
 
 write_infos() {
   local new_prefix=$1
@@ -130,6 +172,8 @@ write_infos() {
   echo "- Exp gff in 02_build_exp_LRRome/LRR_ANNOT/"${new_prefix}"_LRR.gff" >> LRRome_incremental_build_infos.txt
   echo "- Exp LRRome: 02_build_exp_LRRome/LRRome" >> LRRome_incremental_build_infos.txt
   echo "- New LRRome: 03_LRRome" >> LRRome_incremental_build_infos.txt
+  echo "- New gff file: 04_LRRtransfer_inputs/"${init_prefix}"_"${exp_prefix}"_LRR.gff" >> LRRome_incremental_build_infos.txt
+  echo "- Locus info file: 04_LRRtransfer_inputs/"${init_prefix}"_"${exp_prefix}"_info_locus.txt" >> LRRome_incremental_build_infos.txt
 
   echo -e "\n\nSee LRRome_incremental_build_infos.txt for run information.\n"
 }
@@ -137,19 +181,23 @@ write_infos() {
 ## ----------------------------------- MAIN ------------------------------------------------ ##
 
 
-mkdir -p 02_build_exp_LRRome 03_LRRome
+mkdir -p 02_build_exp_LRRome 03_LRRome 04_LRRtransfer_inputs
 
-clean_gff $(realpath 01_gff_EXP) $prefix
+clean_gff $(realpath 01_gff_EXP) $exp_prefix
 
-build_exp_LRRome $prefix $exp_ref_folder
+build_exp_LRRome $exp_prefix $exp_ref_folder
 
 exp_LRRome=$(realpath 02_build_exp_LRRome/LRRome)
 merge_LRRome $initial_LRRome $exp_LRRome 03_LRRome
 
-write_infos $prefix
+concat_gff $init_prefix $exp_prefix $initial_LRR_gff
+
+exp_LRR_gff=$(realpath 02_build_exp_LRRome/LRR_ANNOT/SVEVO_July_LRR.gff)
+create_info_locus $exp_LRR_gff $initial_LRR_gff $exp_prefix $init_prefix
+
+write_infos $exp_prefix
 
 
 
 
-
-# sbatch --partition=agap_normal --mem=20G --wrap="./build_incremental_LRRome.sh"
+# sbatch --partition=agap_normal --mem=20G --wrap="/home/girodollej/scratch/2024_LRR/03_scripts/06_LRRTRANSFER_LAUNCH_PREP/build_incremental_LRRome.sh"
