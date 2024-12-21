@@ -12,9 +12,11 @@ fi
 
 scripts=/home/girodollej/scratch/GeneModelTransfer/SCRIPT
 LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler.sif
+concatAndRmRepeatGenes=/lustre/girodollej/2024_LRR/03_scripts/06_LRRTRANSFER_LAUNCH_PREP/concatAndRmRepeatGenes.py
 
-initial_LRRome=$(realpath /storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/LRRome)
-initial_LRR_gff=$(realpath /storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/Oryza_Nipponbare_IRGSP-1.0_LRR-CR__20220209.gff)
+gff_list=/home/girodollej/scratch/2024_LRR/02_results/06_LRRTRANSFER_LAUNCH_PREP/build_LRRome_withMostRecentGFF/01_gff_EXP/gff_list_order.txt
+initial_LRRome=/storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/LRRome
+initial_LRR_gff=/storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/Oryza_Nipponbare_IRGSP-1.0_LRR-CR__20220209.gff
 exp_ref_folder=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3/Data_Package_01_12_22
 exp_prefix=SVEVO_July
 init_prefix=IRGSP
@@ -74,7 +76,8 @@ build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build
   echo -e "... Running LRRprofiler and removing non-LRR genes >> see final gff in 02_build_exp_LRRome/LRR_ANNOT/"${new_prefix}"_LRR.gff...\n"
   mkdir -p LRRprofile
   cd LRRprofile
-  cat ../CLEANED_GFF/cleaned_*.gff > ${new_prefix}.gff
+  #cat ../CLEANED_GFF/cleaned_*.gff > ${new_prefix}.gff
+  python3 $concatAndRmRepeatGenes --gff_list $gff_list --prefix ${PWD}/../CLEANED_GFF/cleaned_ --output ${new_prefix}.gff
   python3 ${scripts}/Extract_sequences_from_genome.py -g ${new_prefix}.gff -f ../LRR_ANNOT/${new_prefix}.fasta -o ${new_prefix}_proteins.fasta -t FSprot
   singularity run $LRRprofiler_sif --in_proteome ${new_prefix}_proteins.fasta --name ${new_prefix}_LRRprofiler_output
   source $scripts/../bin/lib_gff_comment.sh

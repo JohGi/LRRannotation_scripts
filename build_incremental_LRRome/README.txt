@@ -1,5 +1,6 @@
 Script pour préparer un nouveau LRRome (dans 03_LRRome) à partir de :
 - une série de gff expertisés dans 01_gff_EXP
+- un fichier listant les gff expertisés de 01_gff_EXP dans l'ordre du plus récent au plus ancien >> gff_list
 - le génome de référence des gff (un dossier contenant les fasta des chromosomes individuels nommés Chr*.fasta) >> exp_ref_folder
 - un LRRome déjà fait (ex : riz) >> initial_LRRome
 - le gff des LRR correspondant à ce LRRome >> initial_LRR_gff
@@ -26,6 +27,7 @@ Memory Utilized: 9.57 GB
 Memory Efficiency: 47.83% of 20.00 GB
 
 NB: 
+- Les warnings affichés au moment du create_LRRome.sh concernant des gènes apparaissant dans plusieurs gff vont dans le stdout (slurm...out si run dans un job). Ils viennent de concatAndRmRepeatGenes.py
 - Les warnings affichés au moment du create_LRRome.sh concernant les tailles non multiples de 3 vont dans le stdout (slurm...out si run dans un job).
 Ils viennent de biopython ("Partial codon, len(sequence) not a multiple of three.") et de Extract_sequences_from_genome.py (donne le nom du gène + la séquence).
 - Les warnings/errors de gff_cleaner (notamment sur les CDS/mRNA sans parent) sont écrits dans 02_build_exp_LRRome/gff_cleaner.out
@@ -41,7 +43,7 @@ Si on a déjà un LRRome (par ex riz + blé dur) et qu'on veut rajouter des gèn
 
 2/ Reconstruire le LRRome de blé (build_exp_LRRome()) :
 - concaténer les fastas des chromosomes en 1 seul fasta (1)
-- concaténer les gff en 1 seul
+- concaténer les gff en 1 seul (avec concatAndRmRepeatGenes.py qui vérifie qu'un même gène n'est pas présent plusieurs fois dans un même gff, et qui ne garde que l'annotation la plus récente si un même gène apparaît dans plusieurs gff)
 - extraction des séquences protéiques correspondant au gff (Extract_sequences_from_genome.py -FSprot)
 - identification et classification des gènes LRR à partir des séquences protéiques (LRRprofiler)
 - filtre des gènes non-LRR > gff final du blé (2)
