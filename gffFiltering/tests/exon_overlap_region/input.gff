@@ -1,0 +1,7 @@
+Chr1A   blastCDS        gene    8208734 8212284 .       -       .       ID=DWSvevo3_Chr1A_0008208734;color=3;comment=Origin:DWSvevo3July_Chr1A_0008208734 / pred:mapping / prot-%25-ident:1 / p
+rot-%25-cov:0.999133 / score:1 / scoreNC:1 / Origin:DWSvevo3July_Chr1A_0008208734_mrna_1_CDS_2 / exo_corr:NA / Origin-Fam:LRR-RLK / Origin-Class:Non-canonical Gene-Class:Canonical
+Chr1A   blastCDS        mRNA    8208734 8212284 .       -       .       ID=DWSvevo3_Chr1A_0008208734_mrna_1;Parent=DWSvevo3_Chr1A_0008208734
+Chr1A   blastCDS        exon    8208734 8209104 .       -       .       ID=DWSvevo3_Chr1A_0008208734_mrna_1_exon_1;Parent=DWSvevo3_Chr1A_0008208734_mrna_1
+Chr1A   blastCDS        exon    8209197 8212284 .       -       .       ID=DWSvevo3_Chr1A_0008208734_mrna_1_exon_2;Parent=DWSvevo3_Chr1A_0008208734_mrna_1
+Chr1A   blastCDS        CDS     8208734 8209104 .       -       .       ID=DWSvevo3_Chr1A_0008208734_mrna_1_CDS_1;Parent=DWSvevo3_Chr1A_0008208734_mrna_1
+Chr1A   blastCDS        CDS     8209197 8212284 .       -       .       ID=DWSvevo3_Chr1A_0008208734_mrna_1_CDS_2;Parent=DWSvevo3_Chr1A_0008208734_mrna_1
