@@ -11,12 +11,13 @@ main(){
   exp_ref_genome=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3/Data_Package_01_12_22/DW_Svevo4.fasta
   exp_prefix=DWSvevo3January
   init_prefix=IRGSP
+  seq_type=FSprot # FSprot (will extract sequences with Extract_sequences_from_genome.py accounting for frameshifts) or prot (will extract sequences with AGAT accounting for CDS phase)
 
   mkdir -p 02_build_exp_LRRome 03_LRRome 04_final_GFF
 
   clean_gff $(realpath 01_gff_EXP) $exp_prefix
 
-  build_exp_LRRome_multiGFF $exp_prefix $exp_ref_genome $gff_list 
+  build_exp_LRRome_multiGFF $exp_prefix $exp_ref_genome $gff_list $seq_type
 
   #build_exp_LRRome $exp_prefix $exp_ref_folder
 

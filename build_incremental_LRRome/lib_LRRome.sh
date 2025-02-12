@@ -8,9 +8,12 @@ fi
 if ! command -v singularity &> /dev/null; then
   module load singularity/3.6.3
 fi
+if ! command -v agat &> /dev/null; then
+  module load AGAT/1.2.0-singularity
+fi
 
 
-scripts=/lustre/girodollej/2024_LRR/03_scripts/LRRtransfer/GeneModelTransfer/SCRIPT/
+scripts=/lustre/girodollej/2024_LRR/03_scripts/LRRtransfer/GeneModelTransfer/SCRIPT
 #LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler_v0.21.sif
 LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler.sif
 concatAndRmRepeatGenes=/home/girodollej/scratch/2024_LRR/03_scripts/LRRannotation_scripts/build_incremental_LRRome/concatAndRmRepeatGenes.py
@@ -48,6 +51,7 @@ clean_gff() {             # >> Creates 02_build_exp_LRRome/CLEANED_GFF
   echo -e "... Running gff_cleaner.py...\n"
   for f in GFF_chrOK/*.gff; do
     prefix=$(basename $f)
+    echo -e python3 ${scripts}/VR/gff_cleaner.py -a -p $cleaner_chr_prefix -g $f -o CLEANED_GFF/cleaned_${prefix}"\n"
     python3 ${scripts}/VR/gff_cleaner.py -a -p $cleaner_chr_prefix -g $f -o CLEANED_GFF/cleaned_${prefix}
   done | grep -v "^WARNING: incompatible bounds" > gff_cleaner.out
 
@@ -71,7 +75,7 @@ build_exp_LRRome_multiGFF(){
   local new_prefix=$1
   local input_fasta=$2
   local gff_list=$3
-
+  local seq_type=$4
 
   mkdir -p 02_build_exp_LRRome/LRRprofile
   cd 02_build_exp_LRRome/LRRprofile
@@ -80,7 +84,7 @@ build_exp_LRRome_multiGFF(){
 
   cd ../..
 
-  build_exp_LRRome $new_prefix $input_fasta ${new_prefix}.gff
+  build_exp_LRRome $new_prefix $input_fasta ${new_prefix}.gff ${seq_type}
 }
 
 build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build_exp_LRRome/LRRprofile and 02_build_exp_LRRome/LRRome
@@ -88,22 +92,39 @@ build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build
   local new_prefix=$1
   local input_fasta=$2
   local input_gff=$3
+  local seq_type=$4
   mkdir -p 02_build_exp_LRRome
   cd 02_build_exp_LRRome
 
   ## Detect and classify LRR containing genes with LRRprofiler and remove non LRR genes (write the final gff in LRR_ANNOT)
   echo -e "... Running LRRprofiler and removing non-LRR genes >> see final gff in 02_build_exp_LRRome/LRR_ANNOT/"${new_prefix}"_LRR.gff...\n"
+
   mkdir -p LRRprofile LRR_ANNOT
   cd LRRprofile
 
-  python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot
+  if [[ ${seq_type} == "FSprot" ]] ; then
+    echo -e python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot"\n"
+    python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot
+  elif [[ ${seq_type} == "prot" ]] ; then
+    echo -e agat_sp_extract_sequences.pl -g ${input_gff} -f ${input_fasta} -t cds -p -o ${new_prefix}_proteins.fasta"\n"
+    agat_sp_extract_sequences.pl -g ${input_gff} -f ${input_fasta} -t cds -p -o ${new_prefix}_proteins.fasta
+    sed -i -e '/^>/s/>.*gene=/>/' -e '/^>/s/ seq_id=.*//' ${new_prefix}_proteins.fasta
+  else
+    echo "ERROR: Unknow sequence type (${seq_type})"
+    exit 1
+  fi
+
+  echo -e singularity run $LRRprofiler_sif --in_proteome ${new_prefix}_proteins.fasta --name ${new_prefix}_LRRprofiler_output --dev"\n"
   singularity run $LRRprofiler_sif --in_proteome ${new_prefix}_proteins.fasta --name ${new_prefix}_LRRprofiler_output --dev
+
   source $scripts/../bin/lib_gff_comment.sh
+  echo -e add_family_info ${input_gff} $PWD/Res_${new_prefix}_LRRprofiler_output/Res_step3/LRR_classification.csv $PWD/${new_prefix}_LRR_info.gff"\n"
   add_family_info ${input_gff} $PWD/Res_${new_prefix}_LRRprofiler_output/Res_step3/LRR_classification.csv $PWD/${new_prefix}_LRR_info.gff
 
   awk '{if ($3 == "gene"){print $0}}' ${new_prefix}_LRR_info.gff | grep -v "Fam=" | cut -f2 -d"=" | cut -f1 -d";" > not_LRR_genes.list
   awk '{if ($3 == "gene"){print $0}}' ${new_prefix}_LRR_info.gff | grep -E "Fam=UC|Fam=F-box" | cut -f2 -d"=" | cut -f1 -d";" >> not_LRR_genes.list
 
+  echo -e remove_genes_from_gff ${new_prefix}_LRR_info.gff not_LRR_genes.list ../LRR_ANNOT/${new_prefix}_LRR.gff"\n"
   remove_genes_from_gff ${new_prefix}_LRR_info.gff not_LRR_genes.list ../LRR_ANNOT/${new_prefix}_LRR.gff
 
   ## Compare the number of genes per chromosome before and after removing non-LRR genes
@@ -115,6 +136,7 @@ build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build
 
   ## Build LRRome (in a LRRome folder)
   echo -e "\n... Running create_LRRome.sh in 02_build_exp_LRRome/LRRome...\n"
+  echo -e ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}"\n"
   ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}
 
   cd ..
@@ -197,6 +219,9 @@ compute_gene_stats(){         # >> Fills 04_final_GFF
       if ($i ~ /^ID=/) {
         Sp=gensub("ID=", "", "g", $i)
         Sp=gensub(/_.*/, "", "g", Sp)
+      }
+      if ($i ~ /^Fam:/) {
+        Fam=gensub("Fam:", "", "g", $i)
       }
       if ($i ~ /^Fam=/) {
         Fam=gensub("Fam=", "", "g", $i)
