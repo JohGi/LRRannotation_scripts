@@ -212,7 +212,12 @@ compute_gene_stats(){         # >> Fills 04_final_GFF
   echo -e "\n6/ COMPUTING THE FINAL GFF GENE STATS...\n"
   local gff=$1
   local stats_file=$2
-  awk -F '[ \t;]' 'BEGIN{OFS="\t"}{if ($3 == "gene"){
+  awk -F '[ \t;]|comment=' 'BEGIN{
+    OFS="\t"
+    fam_keys = "^(Fam:|Fam=|family:)"
+    class_keys = "^(Class=|Gene-Class:|class:)"
+  }
+  {if ($3 == "gene"){
     Fam="Non-LRR"
     Chr=$1
     for (i = 1; i <= NF; i++) {
@@ -220,17 +225,11 @@ compute_gene_stats(){         # >> Fills 04_final_GFF
         Sp=gensub("ID=", "", "g", $i)
         Sp=gensub(/_.*/, "", "g", Sp)
       }
-      if ($i ~ /^Fam:/) {
-        Fam=gensub("Fam:", "", "g", $i)
+      if (match($i, fam_keys)) {
+        Fam = gensub(fam_keys, "", 1, $i)
       }
-      if ($i ~ /^Fam=/) {
-        Fam=gensub("Fam=", "", "g", $i)
-      }
-      if ($i ~ /^Class=/) {
-        Class=gensub("Class=", "", "g", $i)
-      }
-      if ($i ~ /^Gene-Class:/) {
-        Class=gensub("Gene-Class:", "", "g", $i)
+      if (match($i, class_keys)) {
+        Class = gensub(class_keys, "", 1, $i)
       }
     }
     print Sp, Chr, Fam, Class
