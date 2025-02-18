@@ -1,0 +1,11 @@
+##gff-version 3
+Chr6B	exonerate:coding2genome	gene	679128621	679136599	.	+	.	ID=DWSvevo3_Chr6B_0679128621;color=2;comment=Origin:DWSvevo3July_Chr2A_0776052415 / pred:cds2genome / prot-%25-ident:0.504348 / prot-%25-cov:0.52146 / score:0.542432 / scoreNC:0.542432 / exo_corr:corrected_intron / exo_corr:modif_stop / exo_corr:modif_start / Origin-Fam:NBS-LRR / Origin-Class:Canonical Gene-Class:Non-canonical / unexpectedSplicingSite
+Chr6B	exonerate:coding2genome	mRNA	679128621	679136599	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1;Parent=DWSvevo3_Chr6B_0679128621
+Chr6B	exonerate:coding2genome	exon	679128621	679129453	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1_exon_1;Parent=DWSvevo3_Chr6B_0679128621_mrna_1
+Chr6B	exonerate:coding2genome	exon	679134363	679134489	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1_exon_2;Parent=DWSvevo3_Chr6B_0679128621_mrna_1
+Chr6B	exonerate:coding2genome	exon	679134701	679136083	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1_exon_3;Parent=DWSvevo3_Chr6B_0679128621_mrna_1
+Chr6B	exonerate:coding2genome	exon	679136114	679136599	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1_exon_4;Parent=DWSvevo3_Chr6B_0679128621_mrna_1
+Chr6B	exonerate:coding2genome	CDS	679128621	679129453	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1_CDS_1;Parent=DWSvevo3_Chr6B_0679128621_mrna_1
+Chr6B	exonerate:coding2genome	CDS	679134363	679134489	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1_CDS_2;Parent=DWSvevo3_Chr6B_0679128621_mrna_1
+Chr6B	exonerate:coding2genome	CDS	679134701	679136083	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1_CDS_3;Parent=DWSvevo3_Chr6B_0679128621_mrna_1
+Chr6B	exonerate:coding2genome	CDS	679136114	679136599	.	+	.	ID=DWSvevo3_Chr6B_0679128621_mrna_1_CDS_4;Parent=DWSvevo3_Chr6B_0679128621_mrna_1

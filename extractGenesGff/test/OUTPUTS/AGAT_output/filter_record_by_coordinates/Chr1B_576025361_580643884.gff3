@@ -1,0 +1,7 @@
+##gff-version 3
+Chr1B	blastCDS	gene	577524884	577527596	.	+	.	ID=DWSvevo3_Chr1B_0577524884;color=3;comment=Origin:DWSvevo3July_Chr1B_0577524884 / pred:mapping / prot-%25-ident:1 / prot-%25-cov:0.998844 / score:1 / scoreNC:1 / Origin:DWSvevo3July_Chr1B_0577524884_mrna_1_CDS_1 / exo_corr:NA / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Canonical
+Chr1B	blastCDS	mRNA	577524884	577527596	.	+	.	ID=DWSvevo3_Chr1B_0577524884_mrna_1;Parent=DWSvevo3_Chr1B_0577524884
+Chr1B	blastCDS	exon	577524884	577526453	.	+	.	ID=DWSvevo3_Chr1B_0577524884_mrna_1_exon_1;Parent=DWSvevo3_Chr1B_0577524884_mrna_1
+Chr1B	blastCDS	exon	577526575	577527596	.	+	.	ID=DWSvevo3_Chr1B_0577524884_mrna_1_exon_2;Parent=DWSvevo3_Chr1B_0577524884_mrna_1
+Chr1B	blastCDS	CDS	577524884	577526453	.	+	.	ID=DWSvevo3_Chr1B_0577524884_mrna_1_CDS_1;Parent=DWSvevo3_Chr1B_0577524884_mrna_1
+Chr1B	blastCDS	CDS	577526575	577527596	.	+	.	ID=DWSvevo3_Chr1B_0577524884_mrna_1_CDS_2;Parent=DWSvevo3_Chr1B_0577524884_mrna_1

@@ -1,0 +1,361 @@
+                            01/14/2025 at 11h10m21s                             
+
+
+ ------------------------------------------------------------------------------
+|   Another GFF Analysis Toolkit (AGAT) - Version: v1.2.0                      |
+|   https://github.com/NBISweden/AGAT                                          |
+|   National Bioinformatics Infrastructure Sweden (NBIS) - www.nbis.se         |
+ ------------------------------------------------------------------------------
+                                        
+                                       
+                          ------ Start parsing ------                           
+-------------------------- parse options and metadata --------------------------
+=> Accessing the feature_levels YAML file
+Using standard /usr/local/lib/perl5/site_perl/auto/share/dist/AGAT/feature_levels.yaml file
+=> Attribute used to group features when no Parent/ID relationship exists (i.e common tag):
+	* locus_tag
+	* gene_id
+=> merge_loci option deactivated
+=> Machine information:
+	This script is being run by perl v5.32.1
+	Bioperl location being used: /usr/local/lib/perl5/site_perl/Bio/
+	Operating system being used: linux 
+=> Accessing Ontology
+	No ontology accessible from the gff file header!
+	We use the SOFA ontology distributed with AGAT:
+		/usr/local/lib/perl5/site_perl/auto/share/dist/AGAT/so.obo
+	Read ontology /usr/local/lib/perl5/site_perl/auto/share/dist/AGAT/so.obo:
+		4 root terms, and 2596 total terms, and 1516 leaf terms
+	Filtering ontology:
+The feature type (3rd column) is constrained to be either a term from the Sequence Ontology or an SO accession number. The latter alternative is distinguished using the syntax SO:000000. In either case, it must be sequence_feature (SO:0000110) or an is_a child of it.
+We filter the ontology to apply this rule.		We found 1861 terms that are sequence_feature or is_a child of it.
+--------------------------------- parsing file ---------------------------------
+=> Number of line in file: 32322
+=> Number of comment lines: 0
+=> Fasta included: No
+=> Number of features lines: 32322
+=> Number of feature type (3rd column): 4
+	* Level1: 1 => gene
+	* level2: 1 => mRNA
+	* level3: 2 => exon CDS
+	* unknown: 0 => 
+=> Version of the Bioperl GFF parser selected by AGAT: 3
+                  ------ End parsing (done in 5 second) ------                  
+
+
+                           ------ Start checks ------                           
+---------------------------- Check1: feature types -----------------------------
+----------------------------------- ontology -----------------------------------
+All feature types in agreement with the Ontology.
+------------------------------------- agat -------------------------------------
+AGAT can deal with all the encountered feature types (3rd column)
+------------------------------ done in 0 seconds -------------------------------
+
+------------------------------ Check2: duplicates ------------------------------
+Duplicates detected! (Same chr/contig/scaffold, same position, same ID)
+contig	exonerate:cdna2genome	CDS	63327	63373	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_6 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	65237	65294	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_13 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	63246	63324	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_5 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	66349	66774	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_17 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	65788	66347	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_16 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	65788	66347	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_16 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	65512	65786	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_15 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	63777	63922	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_8 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	62810	62849	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_1 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	65512	65786	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_15 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	65296	65509	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_14 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	65237	65294	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_13 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	63246	63324	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_5 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	63191	63244	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_4 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	62939	63154	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_3 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	62857	62936	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_2 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	68240	68365	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_19 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	62857	62936	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_2 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	64653	64705	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_9 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	64815	64839	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_11 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	63327	63373	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_6 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	68136	68238	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_18 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	63777	63922	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_8 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	63191	63244	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_4 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	64653	64705	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_9 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	62810	62849	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_1 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	68136	68238	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_18 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	68240	68365	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_19 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	64707	64813	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_10 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	64842	65092	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_12 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	63378	63775	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_7 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	64815	64839	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_11 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	62939	63154	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_3 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	63378	63775	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_7 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	66349	66774	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_17 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	64842	65092	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_12 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	CDS	65296	65509	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_14 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	CDS	64707	64813	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_10 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Removed 38 duplicated cds features for a total of 38 duplicates.
+contig	exonerate:cdna2genome	gene	62810	68365	.	+	.	ID "nbis-gene-1"  ; color 2 ; comment "Origin:OSJnip_Chr02_20851069 / pred:cdna2genome / prot-%-ident:0.193845 / prot-%-cov:0.162144 / score:0.162144 / scoreNC:0.162144 / exo_corr:modif_stop / Origin-Fam:LRR-RLK / Origin-Class:Non-canonical Gene-Class:Non-canonical / noStart / pbFrameshift / unexpectedSplicingSite / stopInFrame" 
+Removed 1 duplicated gene features for a total of 1 duplicates.
+------------------------------ done in 0 seconds -------------------------------
+
+-------------------------- Check3: sequential bucket ---------------------------
+Nothing to check as sequential bucket!
+------------------------------ done in 0 seconds -------------------------------
+
+--------------------------- Check4: l2 linked to l3 ----------------------------
+L1 and L2 created: 
+contig	exonerate:cdna2genome	gene	62810	68365	.	+	.	ID "nbis-gene-2" 
+contig	exonerate:cdna2genome	RNA	62810	68365	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1 ; Parent "nbis-gene-2" 
+L1 and L2 created: 
+contig	exonerate:cdna2genome	gene	62810	68365	.	+	.	ID "nbis-gene-3" 
+contig	exonerate:cdna2genome	RNA	62810	68365	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2 ; Parent "nbis-gene-3" 
+2 cases fixed where L3 features have parent feature(s) missing
+------------------------------ done in 0 seconds -------------------------------
+
+--------------------------- Check5: l1 linked to l2 ----------------------------
+No Parent feature found for DWSvevo3_DWSvevo3_contig_0000062810_mrna_1. We create one: contig	exonerate:cdna2genome	gene	62810	68365	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810
+1 cases fixed where L2 features have parent features missing
+------------------------------ done in 0 seconds -------------------------------
+
+--------------------------- Check6: remove orphan l1 ---------------------------
+We remove only those not supposed to be orphan
+removing contig	exonerate:cdna2genome	gene	62810	68365	.	+	.	ID DWSvevo3_contig_0000062810 ; color 2 ; comment "Origin:OSJnip_Chr02_20851069 / pred:cdna2genome / prot-%-ident:0.193845 / prot-%-cov:0.162144 / score:0.162144 / scoreNC:0.162144 / exo_corr:modif_stop / Origin-Fam:LRR-RLK / Origin-Class:Non-canonical Gene-Class:Non-canonical / noStart / pbFrameshift / unexpectedSplicingSite / stopInFrame" 
+1 cases removed where L1 features do not have children (while they are suposed to have children).
+------------------------------ done in 0 seconds -------------------------------
+
+------------------------- Check7: all level3 locations -------------------------
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	62810	62849	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_1 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	62810	62849	.	+	.	ID "nbis-exon-1"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	62857	62936	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_2 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	62857	62936	.	+	.	ID "nbis-exon-2"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	62939	63154	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_3 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	62939	63154	.	+	.	ID "nbis-exon-3"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63191	63244	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_4 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	63191	63244	.	+	.	ID "nbis-exon-4"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63246	63324	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_5 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	63246	63324	.	+	.	ID "nbis-exon-5"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63327	63373	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_6 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	63327	63373	.	+	.	ID "nbis-exon-6"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63378	63775	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_7 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	63378	63775	.	+	.	ID "nbis-exon-7"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63777	63922	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_8 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	63777	63922	.	+	.	ID "nbis-exon-8"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	64653	64705	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_9 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	64653	64705	.	+	.	ID "nbis-exon-9"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	64707	64813	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_10 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	64707	64813	.	+	.	ID "nbis-exon-10"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	64815	64839	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_11 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	64815	64839	.	+	.	ID "nbis-exon-11"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	64842	65092	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_12 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	64842	65092	.	+	.	ID "nbis-exon-12"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	65237	65294	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_13 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	65237	65294	.	+	.	ID "nbis-exon-13"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	65296	65509	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_14 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	65296	65509	.	+	.	ID "nbis-exon-14"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	65512	65786	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_15 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	65512	65786	.	+	.	ID "nbis-exon-15"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	65788	66347	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_16 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	65788	66347	.	+	.	ID "nbis-exon-16"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	66349	66774	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_17 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	66349	66774	.	+	.	ID "nbis-exon-17"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	68136	68238	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_18 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	68136	68238	.	+	.	ID "nbis-exon-18"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	68240	68365	.	+	.	ID DWSvevo3_contig_0000062810_mrna_1_exon_19 ; Parent DWSvevo3_contig_0000062810_mrna_1
+contig	exonerate:cdna2genome	exon	68240	68365	.	+	.	ID "nbis-exon-19"  ; Parent DWSvevo3_contig_0000062810_mrna_1
+Features adjacents we merge them:
+Chr7A	blastCDS	exon	73498225	73498458	.	-	.	ID DWSvevo3_Chr7A_0073498225_mrna_1_exon_1 ; Parent DWSvevo3_Chr7A_0073498225_mrna_1
+Chr7A	blastCDS	exon	73498459	73498461	.	-	.	ID DWSvevo3_Chr7A_0073498225_mrna_1_exon_2 ; Parent DWSvevo3_Chr7A_0073498225_mrna_1
+Features adjacents we merge them:
+Chr7A	blastCDS	exon	73498225	73498461	.	-	.	ID DWSvevo3_Chr7A_0073498225_mrna_1_exon_1 ; Parent DWSvevo3_Chr7A_0073498225_mrna_1
+Chr7A	blastCDS	exon	73498461	73498962	.	-	.	ID DWSvevo3_Chr7A_0073498225_mrna_1_exon_3 ; Parent DWSvevo3_Chr7A_0073498225_mrna_1
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	62810	62849	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_1 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	62810	62849	.	+	.	ID "nbis-exon-20"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	62857	62936	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_2 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	62857	62936	.	+	.	ID "nbis-exon-21"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	62939	63154	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_3 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	62939	63154	.	+	.	ID "nbis-exon-22"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63191	63244	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_4 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	63191	63244	.	+	.	ID "nbis-exon-23"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63246	63324	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_5 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	63246	63324	.	+	.	ID "nbis-exon-24"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63327	63373	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_6 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	63327	63373	.	+	.	ID "nbis-exon-25"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63378	63775	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_7 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	63378	63775	.	+	.	ID "nbis-exon-26"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	63777	63922	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_8 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	63777	63922	.	+	.	ID "nbis-exon-27"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	64653	64705	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_9 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	64653	64705	.	+	.	ID "nbis-exon-28"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	64707	64813	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_10 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	64707	64813	.	+	.	ID "nbis-exon-29"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	64815	64839	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_11 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	64815	64839	.	+	.	ID "nbis-exon-30"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	64842	65092	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_12 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	64842	65092	.	+	.	ID "nbis-exon-31"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	65237	65294	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_13 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	65237	65294	.	+	.	ID "nbis-exon-32"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	65296	65509	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_14 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	65296	65509	.	+	.	ID "nbis-exon-33"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	65512	65786	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_15 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	65512	65786	.	+	.	ID "nbis-exon-34"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	65788	66347	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_16 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	65788	66347	.	+	.	ID "nbis-exon-35"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	66349	66774	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_17 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	66349	66774	.	+	.	ID "nbis-exon-36"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	68136	68238	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_18 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	68136	68238	.	+	.	ID "nbis-exon-37"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+contig	exonerate:cdna2genome	exon	68240	68365	.	+	.	ID DWSvevo3_contig_0000062810_mrna_2_exon_19 ; Parent DWSvevo3_contig_0000062810_mrna_2
+contig	exonerate:cdna2genome	exon	68240	68365	.	+	.	ID "nbis-exon-38"  ; Parent DWSvevo3_contig_0000062810_mrna_2
+Features adjacents we merge them:
+Chr7A	blastCDS	CDS	73498225	73498458	.	-	.	ID DWSvevo3_Chr7A_0073498225_mrna_1_CDS_1 ; Parent DWSvevo3_Chr7A_0073498225_mrna_1
+Chr7A	blastCDS	CDS	73498459	73498461	.	-	.	ID DWSvevo3_Chr7A_0073498225_mrna_1_CDS_2 ; Parent DWSvevo3_Chr7A_0073498225_mrna_1
+Features adjacents we merge them:
+Chr7A	blastCDS	CDS	73498225	73498461	.	-	.	ID DWSvevo3_Chr7A_0073498225_mrna_1_CDS_1 ; Parent DWSvevo3_Chr7A_0073498225_mrna_1
+Chr7A	blastCDS	CDS	73498461	73498962	.	-	.	ID DWSvevo3_Chr7A_0073498225_mrna_1_CDS_3 ; Parent DWSvevo3_Chr7A_0073498225_mrna_1
+------------------------------ done in 1 seconds -------------------------------
+
+------------------------------ Check8: check cds -------------------------------
+No problem found
+------------------------------ done in 0 seconds -------------------------------
+
+----------------------------- Check9: check exons ------------------------------
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	62810	62849	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_1_CDS_1 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	62857	62936	.	+	.	ID "nbis-exon-39"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	62939	63154	.	+	.	ID "nbis-exon-40"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	63191	63244	.	+	.	ID "nbis-exon-41"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	63246	63324	.	+	.	ID "nbis-exon-42"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	63327	63373	.	+	.	ID "nbis-exon-43"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	63378	63775	.	+	.	ID "nbis-exon-44"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	63777	63922	.	+	.	ID "nbis-exon-45"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	64653	64705	.	+	.	ID "nbis-exon-46"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	64707	64813	.	+	.	ID "nbis-exon-47"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	64815	64839	.	+	.	ID "nbis-exon-48"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	64842	65092	.	+	.	ID "nbis-exon-49"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	65237	65294	.	+	.	ID "nbis-exon-50"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	65296	65509	.	+	.	ID "nbis-exon-51"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	65512	65786	.	+	.	ID "nbis-exon-52"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	65788	66347	.	+	.	ID "nbis-exon-53"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	66349	66774	.	+	.	ID "nbis-exon-54"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	68136	68238	.	+	.	ID "nbis-exon-55"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_1
+:contig	exonerate:cdna2genome	exon	68240	68365	.	+	.	ID "nbis-exon-56"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_1
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	62810	62849	.	+	.	ID DWSvevo3_DWSvevo3_contig_0000062810_mrna_2_CDS_1 ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	62857	62936	.	+	.	ID "nbis-exon-57"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	62939	63154	.	+	.	ID "nbis-exon-58"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	63191	63244	.	+	.	ID "nbis-exon-59"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	63246	63324	.	+	.	ID "nbis-exon-60"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	63327	63373	.	+	.	ID "nbis-exon-61"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	63378	63775	.	+	.	ID "nbis-exon-62"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	63777	63922	.	+	.	ID "nbis-exon-63"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	64653	64705	.	+	.	ID "nbis-exon-64"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	64707	64813	.	+	.	ID "nbis-exon-65"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	64815	64839	.	+	.	ID "nbis-exon-66"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	64842	65092	.	+	.	ID "nbis-exon-67"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	65237	65294	.	+	.	ID "nbis-exon-68"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	65296	65509	.	+	.	ID "nbis-exon-69"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	65512	65786	.	+	.	ID "nbis-exon-70"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	65788	66347	.	+	.	ID "nbis-exon-71"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	66349	66774	.	+	.	ID "nbis-exon-72"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	68136	68238	.	+	.	ID "nbis-exon-73"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+Create one Exon for dwsvevo3_dwsvevo3_contig_0000062810_mrna_2
+:contig	exonerate:cdna2genome	exon	68240	68365	.	+	.	ID "nbis-exon-74"  ; Parent DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+38 exons created that were missing
+No exons locations modified
+No supernumerary exons removed
+No level2 locations modified
+------------------------------ done in 0 seconds -------------------------------
+
+----------------------------- Check10: check utrs ------------------------------
+No UTRs created
+No UTRs locations modified
+No supernumerary UTRs removed
+------------------------------ done in 1 seconds -------------------------------
+
+------------------------ Check11: all level2 locations -------------------------
+No problem found
+------------------------------ done in 0 seconds -------------------------------
+
+------------------------ Check12: all level1 locations -------------------------
+No problem found
+------------------------------ done in 0 seconds -------------------------------
+
+---------------------- Check13: remove identical isoforms ----------------------
+Lets remove isoform nbis-mrna-2
+Lets remove isoform DWSvevo3_DWSvevo3_contig_0000062810_mrna_2
+2 identical isoforms removed
+------------------------------ done in 0 seconds -------------------------------
+                  ------ End checks (done in 2 second) ------                   
+
+

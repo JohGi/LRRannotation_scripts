@@ -1,0 +1,7 @@
+##gff-version 3
+Chr7B	exonerate:coding2genome	gene	681897929	681900873	.	-	.	ID=DWSvevo3_Chr7B_0681897929;color=2;comment=Origin:DWSvevo3July_Chr3B_0761180142 / pred:cds2genome / prot-%25-ident:0.719674 / prot-%25-cov:0.773856 / score:0.790421 / scoreNC:0.790421 / exo_corr:modif_start / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / pbFrameshift
+Chr7B	exonerate:coding2genome	mRNA	681897929	681900873	.	-	.	ID=DWSvevo3_Chr7B_0681897929_mrna_1;Parent=DWSvevo3_Chr7B_0681897929
+Chr7B	exonerate:coding2genome	exon	681897929	681899518	.	-	.	ID=DWSvevo3_Chr7B_0681897929_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0681897929_mrna_1
+Chr7B	exonerate:coding2genome	exon	681899521	681900873	.	-	.	ID=DWSvevo3_Chr7B_0681897929_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0681897929_mrna_1
+Chr7B	exonerate:coding2genome	CDS	681897929	681899518	.	-	.	ID=DWSvevo3_Chr7B_0681897929_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0681897929_mrna_1
+Chr7B	exonerate:coding2genome	CDS	681899521	681900873	.	-	.	ID=DWSvevo3_Chr7B_0681897929_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0681897929_mrna_1

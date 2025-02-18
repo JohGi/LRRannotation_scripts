@@ -1,0 +1,15 @@
+##gff-version 3
+Chr6A	exonerate:coding2genome	gene	24719250	24722147	.	+	.	ID=DWSvevo3_Chr6A_0024719250;color=3;comment=Origin:DWSvevo3July_Chr2B_0031684746 / pred:cds2genome / prot-%25-ident:0.710145 / prot-%25-cov:0.734599 / score:0.742204 / scoreNC:0.742204 / exo_corr:NA / Origin-Fam:LRR-RLP / Origin-Class:Non-canonical Gene-Class:Canonical
+Chr6A	exonerate:coding2genome	mRNA	24719250	24722147	.	+	.	ID=DWSvevo3_Chr6A_0024719250_mrna_1;Parent=DWSvevo3_Chr6A_0024719250
+Chr6A	exonerate:coding2genome	exon	24719250	24722147	.	+	.	ID=DWSvevo3_Chr6A_0024719250_mrna_1_exon_1;Parent=DWSvevo3_Chr6A_0024719250_mrna_1
+Chr6A	exonerate:coding2genome	CDS	24719250	24722147	.	+	.	ID=DWSvevo3_Chr6A_0024719250_mrna_1_CDS_1;Parent=DWSvevo3_Chr6A_0024719250_mrna_1
+Chr6A	exonerate:protein2genome:local	gene	24865337	24868198	.	+	.	ID=DWSvevo3_Chr6A_0024865337;color=2;comment=Origin:DWSvevo3July_Chr2B_0031684746 / pred:prot2genome / prot-%25-ident:0.72956 / prot-%25-cov:0.765582 / score:0.783237 / scoreNC:0.783237 / exo_corr:NA / Origin-Fam:LRR-RLP / Origin-Class:Non-canonical Gene-Class:Non-canonical / unexpectedSplicingSite / stopInFrame
+Chr6A	exonerate:protein2genome:local	mRNA	24865337	24868198	.	+	.	ID=DWSvevo3_Chr6A_0024865337_mrna_1;Parent=DWSvevo3_Chr6A_0024865337
+Chr6A	exonerate:protein2genome:local	exon	24865337	24867475	.	+	.	ID=DWSvevo3_Chr6A_0024865337_mrna_1_exon_1;Parent=DWSvevo3_Chr6A_0024865337_mrna_1
+Chr6A	exonerate:protein2genome:local	exon	24867524	24868198	.	+	.	ID=DWSvevo3_Chr6A_0024865337_mrna_1_exon_2;Parent=DWSvevo3_Chr6A_0024865337_mrna_1
+Chr6A	exonerate:protein2genome:local	CDS	24865337	24867475	.	+	.	ID=DWSvevo3_Chr6A_0024865337_mrna_1_CDS_1;Parent=DWSvevo3_Chr6A_0024865337_mrna_1
+Chr6A	exonerate:protein2genome:local	CDS	24867524	24868198	.	+	.	ID=DWSvevo3_Chr6A_0024865337_mrna_1_CDS_2;Parent=DWSvevo3_Chr6A_0024865337_mrna_1
+Chr6A	blastCDS	gene	25071092	25074313	.	+	.	ID=DWSvevo3_Chr6A_0025071092;color=3;comment=Origin:DWSvevo3July_Chr6B_0049559278 / pred:mapping / prot-%25-ident:0.937616 / prot-%25-cov:0.952602 / score:0.954376 / scoreNC:0.954376 / Origin:DWSvevo3July_Chr6B_0049559278_mrna_1_CDS_1 / exo_corr:NA / Origin-Fam:LRR-RLK / Origin-Class:Canonical Gene-Class:Canonical
+Chr6A	blastCDS	mRNA	25071092	25074313	.	+	.	ID=DWSvevo3_Chr6A_0025071092_mrna_1;Parent=DWSvevo3_Chr6A_0025071092
+Chr6A	blastCDS	exon	25071092	25074313	.	+	.	ID=DWSvevo3_Chr6A_0025071092_mrna_1_exon_1;Parent=DWSvevo3_Chr6A_0025071092_mrna_1
+Chr6A	blastCDS	CDS	25071092	25074313	.	+	.	ID=DWSvevo3_Chr6A_0025071092_mrna_1_CDS_1;Parent=DWSvevo3_Chr6A_0025071092_mrna_1

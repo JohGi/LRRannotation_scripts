@@ -1,0 +1,7 @@
+##gff-version 3
+Chr5A	exonerate:coding2genome	gene	585120076	585121541	.	-	.	ID=DWSvevo3_Chr5A_0585120076;color=3;comment=Origin:DWSvevo3July_Chr5B_0586648100 / pred:cds2genome / prot-%25-ident:0.973799 / prot-%25-cov:0.982609 / score:0.9869 / scoreNC:0.9869 / exo_corr:modif_start / Origin-Fam:UC / Origin-Class:Non-canonical Gene-Class:Canonical
+Chr5A	exonerate:coding2genome	mRNA	585120076	585121541	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1;Parent=DWSvevo3_Chr5A_0585120076
+Chr5A	exonerate:coding2genome	exon	585120076	585120828	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1_exon_1;Parent=DWSvevo3_Chr5A_0585120076_mrna_1
+Chr5A	exonerate:coding2genome	exon	585120912	585121541	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1_exon_2;Parent=DWSvevo3_Chr5A_0585120076_mrna_1
+Chr5A	exonerate:coding2genome	CDS	585120076	585120828	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1_CDS_1;Parent=DWSvevo3_Chr5A_0585120076_mrna_1
+Chr5A	exonerate:coding2genome	CDS	585120912	585121541	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1_CDS_2;Parent=DWSvevo3_Chr5A_0585120076_mrna_1

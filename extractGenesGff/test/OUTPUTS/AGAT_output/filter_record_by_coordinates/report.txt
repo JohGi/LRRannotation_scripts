@@ -1,0 +1,5 @@
+01/14/2025 at 11h10m21s
+usage: /usr/local/bin/agat_sp_filter_record_by_coordinates.pl --gff /storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3_LRR_ANNOT_2024_07_12/02_OUTPUT_2024_08_03/annot_best.gff --tsv /lustre/girodollej/2024_LRR/03_scripts/extractGenesGff/test/zones_test.tsv
+We will get features that are within the 50 selected ranges.
+347 record(s) selected within the range(s).
+3150 record(s) out of the range(s).

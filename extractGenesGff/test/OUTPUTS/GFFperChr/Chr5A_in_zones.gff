@@ -1,0 +1,22 @@
+##gff-version 3
+Chr5A	exonerate:coding2genome	gene	585120076	585121541	.	-	.	ID=DWSvevo3_Chr5A_0585120076;color=3;comment=Origin:DWSvevo3July_Chr5B_0586648100 / pred:cds2genome / prot-%25-ident:0.973799 / prot-%25-cov:0.982609 / score:0.9869 / scoreNC:0.9869 / exo_corr:modif_start / Origin-Fam:UC / Origin-Class:Non-canonical Gene-Class:Canonical
+Chr5A	exonerate:coding2genome	mRNA	585120076	585121541	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1;Parent=DWSvevo3_Chr5A_0585120076
+Chr5A	exonerate:coding2genome	exon	585120076	585120828	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1_exon_1;Parent=DWSvevo3_Chr5A_0585120076_mrna_1
+Chr5A	exonerate:coding2genome	exon	585120912	585121541	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1_exon_2;Parent=DWSvevo3_Chr5A_0585120076_mrna_1
+Chr5A	exonerate:coding2genome	CDS	585120076	585120828	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1_CDS_1;Parent=DWSvevo3_Chr5A_0585120076_mrna_1
+Chr5A	exonerate:coding2genome	CDS	585120912	585121541	.	-	.	ID=DWSvevo3_Chr5A_0585120076_mrna_1_CDS_2;Parent=DWSvevo3_Chr5A_0585120076_mrna_1
+##gff-version 3
+Chr5A	exonerate:protein2genome:local	gene	699341009	699343477	.	+	.	ID=DWSvevo3_Chr5A_0699341009;color=2;comment=Origin:DWSvevo3July_Chr4B_0675781661 / pred:prot2genome / prot-%25-ident:0.867073 / prot-%25-cov:0.773311 / score:0.885535 / scoreNC:0.885535 / exo_corr:NA / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / noStart / pbFrameshift / stopInFrame
+Chr5A	exonerate:protein2genome:local	mRNA	699341009	699343477	.	+	.	ID=DWSvevo3_Chr5A_0699341009_mrna_1;Parent=DWSvevo3_Chr5A_0699341009
+Chr5A	exonerate:protein2genome:local	exon	699341009	699341479	.	+	.	ID=DWSvevo3_Chr5A_0699341009_mrna_1_exon_1;Parent=DWSvevo3_Chr5A_0699341009_mrna_1
+Chr5A	exonerate:protein2genome:local	exon	699341488	699342102	.	+	.	ID=DWSvevo3_Chr5A_0699341009_mrna_1_exon_2;Parent=DWSvevo3_Chr5A_0699341009_mrna_1
+Chr5A	exonerate:protein2genome:local	exon	699342107	699343477	.	+	.	ID=DWSvevo3_Chr5A_0699341009_mrna_1_exon_3;Parent=DWSvevo3_Chr5A_0699341009_mrna_1
+Chr5A	exonerate:protein2genome:local	CDS	699341009	699341479	.	+	.	ID=DWSvevo3_Chr5A_0699341009_mrna_1_CDS_1;Parent=DWSvevo3_Chr5A_0699341009_mrna_1
+Chr5A	exonerate:protein2genome:local	CDS	699341488	699342102	.	+	.	ID=DWSvevo3_Chr5A_0699341009_mrna_1_CDS_2;Parent=DWSvevo3_Chr5A_0699341009_mrna_1
+Chr5A	exonerate:protein2genome:local	CDS	699342107	699343477	.	+	.	ID=DWSvevo3_Chr5A_0699341009_mrna_1_CDS_3;Parent=DWSvevo3_Chr5A_0699341009_mrna_1
+Chr5A	exonerate:cdna2genome	gene	701793076	701795977	.	+	.	ID=DWSvevo3_Chr5A_0701793076;color=2;comment=Origin:DWSvevo3July_Chr7A_0560219280 / pred:cdna2genome / prot-%25-ident:0.681818 / prot-%25-cov:0.739352 / score:0.763794 / scoreNC:0.763794 / exo_corr:NA / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / noStop / pbFrameshift
+Chr5A	exonerate:cdna2genome	mRNA	701793076	701795977	.	+	.	ID=DWSvevo3_Chr5A_0701793076_mrna_1;Parent=DWSvevo3_Chr5A_0701793076
+Chr5A	exonerate:cdna2genome	exon	701793076	701793510	.	+	.	ID=DWSvevo3_Chr5A_0701793076_mrna_1_exon_1;Parent=DWSvevo3_Chr5A_0701793076_mrna_1
+Chr5A	exonerate:cdna2genome	exon	701793521	701795977	.	+	.	ID=DWSvevo3_Chr5A_0701793076_mrna_1_exon_2;Parent=DWSvevo3_Chr5A_0701793076_mrna_1
+Chr5A	exonerate:cdna2genome	CDS	701793076	701793510	.	+	.	ID=DWSvevo3_Chr5A_0701793076_mrna_1_CDS_1;Parent=DWSvevo3_Chr5A_0701793076_mrna_1
+Chr5A	exonerate:cdna2genome	CDS	701793521	701795977	.	+	.	ID=DWSvevo3_Chr5A_0701793076_mrna_1_CDS_2;Parent=DWSvevo3_Chr5A_0701793076_mrna_1

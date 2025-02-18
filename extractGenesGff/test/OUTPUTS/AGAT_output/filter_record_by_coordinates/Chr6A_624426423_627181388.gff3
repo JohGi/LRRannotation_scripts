@@ -1,0 +1,15 @@
+##gff-version 3
+Chr6A	exonerate:coding2genome	gene	624612580	624616291	.	+	.	ID=DWSvevo3_Chr6A_0624612580;color=2;comment=Origin:DWSvevo3July_Chr7A_0499233351 / pred:cds2genome / prot-%25-ident:0.576996 / prot-%25-cov:0.656187 / score:0.666791 / scoreNC:0.666791 / exo_corr:NA / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / noStop
+Chr6A	exonerate:coding2genome	mRNA	624612580	624616291	.	+	.	ID=DWSvevo3_Chr6A_0624612580_mrna_1;Parent=DWSvevo3_Chr6A_0624612580
+Chr6A	exonerate:coding2genome	exon	624612580	624613629	.	+	.	ID=DWSvevo3_Chr6A_0624612580_mrna_1_exon_1;Parent=DWSvevo3_Chr6A_0624612580_mrna_1
+Chr6A	exonerate:coding2genome	exon	624614186	624616291	.	+	.	ID=DWSvevo3_Chr6A_0624612580_mrna_1_exon_2;Parent=DWSvevo3_Chr6A_0624612580_mrna_1
+Chr6A	exonerate:coding2genome	CDS	624612580	624613629	.	+	.	ID=DWSvevo3_Chr6A_0624612580_mrna_1_CDS_1;Parent=DWSvevo3_Chr6A_0624612580_mrna_1
+Chr6A	exonerate:coding2genome	CDS	624614186	624616291	.	+	.	ID=DWSvevo3_Chr6A_0624612580_mrna_1_CDS_2;Parent=DWSvevo3_Chr6A_0624612580_mrna_1
+Chr6A	exonerate:protein2genome:local	gene	625226488	625232296	.	+	.	ID=DWSvevo3_Chr6A_0625226488;color=2;comment=Origin:OSJnip_Chr02_35710557 / pred:prot2genome / prot-%25-ident:0.642643 / prot-%25-cov:0.586574 / score:0.609473 / scoreNC:0.609473 / exo_corr:modif_stop / exo_corr:modif_start / Origin-Fam:LRR-RLK / Origin-Class:Canonical Gene-Class:Non-canonical / unexpectedSplicingSite
+Chr6A	exonerate:protein2genome:local	mRNA	625226488	625232296	.	+	.	ID=DWSvevo3_Chr6A_0625226488_mrna_1;Parent=DWSvevo3_Chr6A_0625226488
+Chr6A	exonerate:protein2genome:local	exon	625226488	625227204	.	+	.	ID=DWSvevo3_Chr6A_0625226488_mrna_1_exon_1;Parent=DWSvevo3_Chr6A_0625226488_mrna_1
+Chr6A	exonerate:protein2genome:local	exon	625227235	625227909	.	+	.	ID=DWSvevo3_Chr6A_0625226488_mrna_1_exon_2;Parent=DWSvevo3_Chr6A_0625226488_mrna_1
+Chr6A	exonerate:protein2genome:local	exon	625231643	625232296	.	+	.	ID=DWSvevo3_Chr6A_0625226488_mrna_1_exon_3;Parent=DWSvevo3_Chr6A_0625226488_mrna_1
+Chr6A	exonerate:protein2genome:local	CDS	625226488	625227204	.	+	.	ID=DWSvevo3_Chr6A_0625226488_mrna_1_CDS_1;Parent=DWSvevo3_Chr6A_0625226488_mrna_1
+Chr6A	exonerate:protein2genome:local	CDS	625227235	625227909	.	+	.	ID=DWSvevo3_Chr6A_0625226488_mrna_1_CDS_2;Parent=DWSvevo3_Chr6A_0625226488_mrna_1
+Chr6A	exonerate:protein2genome:local	CDS	625231643	625232296	.	+	.	ID=DWSvevo3_Chr6A_0625226488_mrna_1_CDS_3;Parent=DWSvevo3_Chr6A_0625226488_mrna_1

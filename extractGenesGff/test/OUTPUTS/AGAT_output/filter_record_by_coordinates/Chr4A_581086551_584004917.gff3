@@ -1,0 +1,5 @@
+##gff-version 3
+Chr4A	exonerate:cdna2genome	gene	583246087	583248153	.	+	.	ID=DWSvevo3_Chr4A_0583246087;color=2;comment=Origin:OSJnip_Chr02_02975382 / pred:cdna2genome / prot-%25-ident:0.58841 / prot-%25-cov:0.416623 / score:0.648768 / scoreNC:0.648768 / exo_corr:modif_stop / Origin-Fam:LRR-RLK / Origin-Class:Canonical Gene-Class:Non-canonical / noStart
+Chr4A	exonerate:cdna2genome	mRNA	583246087	583248153	.	+	.	ID=DWSvevo3_Chr4A_0583246087_mrna_1;Parent=DWSvevo3_Chr4A_0583246087
+Chr4A	exonerate:cdna2genome	exon	583246087	583248153	.	+	.	ID=DWSvevo3_Chr4A_0583246087_mrna_1_exon_1;Parent=DWSvevo3_Chr4A_0583246087_mrna_1
+Chr4A	exonerate:cdna2genome	CDS	583246087	583248153	.	+	.	ID=DWSvevo3_Chr4A_0583246087_mrna_1_CDS_1;Parent=DWSvevo3_Chr4A_0583246087_mrna_1

@@ -1,0 +1,23 @@
+##gff-version 3
+Chr7A	blastCDS	gene	84104321	84107865	.	-	.	ID=DWSvevo3_Chr7A_0084104321;color=2;comment=Origin:DWSvevo3July_Chr7A_0084104321 / pred:mapping / prot-%25-ident:1.00413 / prot-%25-cov:0.998632 / score:1.00413 / scoreNC:1.00413 / Origin:DWSvevo3July_Chr7A_0084104321_mrna_1_CDS_10 / exo_corr:NA / Origin-Fam:LRR-RLK / Origin-Class:Non-canonical Gene-Class:Non-canonical / noStart / stopInFrame
+Chr7A	blastCDS	mRNA	84104321	84107865	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1;Parent=DWSvevo3_Chr7A_0084104321
+Chr7A	blastCDS	exon	84104321	84105015	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_1;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84105103	84105171	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_2;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84105254	84105380	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_3;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84105482	84105750	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_4;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84106127	84106281	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_5;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84106366	84106446	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_6;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84106526	84106597	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_7;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84106698	84106769	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_8;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84106901	84107039	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_9;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	exon	84107355	84107865	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_exon_10;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84104321	84105015	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_1;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84105103	84105171	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_2;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84105254	84105380	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_3;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84105482	84105750	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_4;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84106127	84106281	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_5;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84106366	84106446	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_6;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84106526	84106597	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_7;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84106698	84106769	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_8;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84106901	84107039	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_9;Parent=DWSvevo3_Chr7A_0084104321_mrna_1
+Chr7A	blastCDS	CDS	84107355	84107865	.	-	.	ID=DWSvevo3_Chr7A_0084104321_mrna_1_CDS_10;Parent=DWSvevo3_Chr7A_0084104321_mrna_1

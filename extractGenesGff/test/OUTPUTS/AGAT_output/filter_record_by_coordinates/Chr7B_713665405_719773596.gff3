@@ -1,0 +1,95 @@
+##gff-version 3
+Chr7B	exonerate:cdna2genome	gene	715955445	715963146	.	+	.	ID=DWSvevo3_Chr7B_0715955445;color=2;comment=Origin:DWSvevo3July_Chr7A_0729823524 / pred:cdna2genomeExon / prot-%25-ident:0.755016 / prot-%25-cov:0.821764 / score:0.821764 / scoreNC:0.821764 / exo_corr:modif_stop / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / stopInFrame
+Chr7B	exonerate:cdna2genome	mRNA	715955445	715963146	.	+	.	ID=DWSvevo3_Chr7B_0715955445_mrna_1;Parent=DWSvevo3_Chr7B_0715955445
+Chr7B	exonerate:cdna2genome	exon	715955445	715956316	.	+	.	ID=DWSvevo3_Chr7B_0715955445_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0715955445_mrna_1
+Chr7B	exonerate:cdna2genome	exon	715961178	715963146	.	+	.	ID=DWSvevo3_Chr7B_0715955445_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0715955445_mrna_1
+Chr7B	exonerate:cdna2genome	CDS	715955445	715956316	.	+	.	ID=DWSvevo3_Chr7B_0715955445_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0715955445_mrna_1
+Chr7B	exonerate:cdna2genome	CDS	715961178	715963146	.	+	.	ID=DWSvevo3_Chr7B_0715955445_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0715955445_mrna_1
+Chr7B	exonerate:coding2genome	gene	716055713	716057718	.	+	.	ID=DWSvevo3_Chr7B_0716055713;color=2;comment=Origin:DWSvevo3July_Chr7A_0729823524 / pred:cds2genome / prot-%25-ident:0.856712 / prot-%25-cov:0.635035 / score:0.90514 / scoreNC:0.90514 / exo_corr:modif_start / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / pbFrameshift / stopInFrame
+Chr7B	exonerate:coding2genome	mRNA	716055713	716057718	.	+	.	ID=DWSvevo3_Chr7B_0716055713_mrna_1;Parent=DWSvevo3_Chr7B_0716055713
+Chr7B	exonerate:coding2genome	exon	716055713	716057419	.	+	.	ID=DWSvevo3_Chr7B_0716055713_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0716055713_mrna_1
+Chr7B	exonerate:coding2genome	exon	716057422	716057718	.	+	.	ID=DWSvevo3_Chr7B_0716055713_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0716055713_mrna_1
+Chr7B	exonerate:coding2genome	CDS	716055713	716057419	.	+	.	ID=DWSvevo3_Chr7B_0716055713_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0716055713_mrna_1
+Chr7B	exonerate:coding2genome	CDS	716057422	716057718	.	+	.	ID=DWSvevo3_Chr7B_0716055713_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0716055713_mrna_1
+Chr7B	exonerate:cdna2genome	gene	716261957	716267642	.	+	.	ID=DWSvevo3_Chr7B_0716261957;color=3;comment=Origin:DWSvevo3July_Chr7A_0730382911 / pred:cdna2genomeExon / prot-%25-ident:0.719178 / prot-%25-cov:0.781677 / score:0.789038 / scoreNC:0.789038 / exo_corr:modif_stop / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Canonical
+Chr7B	exonerate:cdna2genome	mRNA	716261957	716267642	.	+	.	ID=DWSvevo3_Chr7B_0716261957_mrna_1;Parent=DWSvevo3_Chr7B_0716261957
+Chr7B	exonerate:cdna2genome	exon	716261957	716263042	.	+	.	ID=DWSvevo3_Chr7B_0716261957_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0716261957_mrna_1
+Chr7B	exonerate:cdna2genome	exon	716263724	716264341	.	+	.	ID=DWSvevo3_Chr7B_0716261957_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0716261957_mrna_1
+Chr7B	exonerate:cdna2genome	exon	716265834	716267642	.	+	.	ID=DWSvevo3_Chr7B_0716261957_mrna_1_exon_3;Parent=DWSvevo3_Chr7B_0716261957_mrna_1
+Chr7B	exonerate:cdna2genome	CDS	716261957	716263042	.	+	.	ID=DWSvevo3_Chr7B_0716261957_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0716261957_mrna_1
+Chr7B	exonerate:cdna2genome	CDS	716263724	716264341	.	+	.	ID=DWSvevo3_Chr7B_0716261957_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0716261957_mrna_1
+Chr7B	exonerate:cdna2genome	CDS	716265834	716267642	.	+	.	ID=DWSvevo3_Chr7B_0716261957_mrna_1_CDS_3;Parent=DWSvevo3_Chr7B_0716261957_mrna_1
+Chr7B	exonerate:protein2genome:local	gene	716292674	716300269	.	+	.	ID=DWSvevo3_Chr7B_0716292674;color=2;comment=Origin:DWSvevo3July_Chr7A_0671045351 / pred:prot2genome / prot-%25-ident:0.598639 / prot-%25-cov:0.668587 / score:0.668587 / scoreNC:0.668587 / exo_corr:corrected_intron / exo_corr:fix_overlap / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / pbFrameshift
+Chr7B	exonerate:protein2genome:local	mRNA	716292674	716300269	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1;Parent=DWSvevo3_Chr7B_0716292674
+Chr7B	exonerate:protein2genome:local	exon	716292674	716293753	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	716297219	716297683	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	716297688	716297843	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_exon_3;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	716298985	716299065	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_exon_4;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	716299067	716300269	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_exon_5;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	716292674	716293753	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	716297219	716297683	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	716297688	716297843	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_CDS_3;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	716298985	716299065	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_CDS_4;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	716299067	716300269	.	+	.	ID=DWSvevo3_Chr7B_0716292674_mrna_1_CDS_5;Parent=DWSvevo3_Chr7B_0716292674_mrna_1
+Chr7B	blastCDS	gene	716354536	716357526	.	+	.	ID=DWSvevo3_Chr7B_0716354536;color=3;comment=Origin:DWSvevo3July_Chr7B_0716354536 / pred:mapping / prot-%25-ident:1 / prot-%25-cov:0.99872 / score:1 / scoreNC:1 / Origin:DWSvevo3July_Chr7B_0716354536_mrna_1_CDS_1 / exo_corr:NA / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Canonical
+Chr7B	blastCDS	mRNA	716354536	716357526	.	+	.	ID=DWSvevo3_Chr7B_0716354536_mrna_1;Parent=DWSvevo3_Chr7B_0716354536
+Chr7B	blastCDS	exon	716354536	716355066	.	+	.	ID=DWSvevo3_Chr7B_0716354536_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0716354536_mrna_1
+Chr7B	blastCDS	exon	716355718	716357526	.	+	.	ID=DWSvevo3_Chr7B_0716354536_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0716354536_mrna_1
+Chr7B	blastCDS	CDS	716354536	716355066	.	+	.	ID=DWSvevo3_Chr7B_0716354536_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0716354536_mrna_1
+Chr7B	blastCDS	CDS	716355718	716357526	.	+	.	ID=DWSvevo3_Chr7B_0716354536_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0716354536_mrna_1
+Chr7B	exonerate:coding2genome	gene	718043936	718051843	.	+	.	ID=DWSvevo3_Chr7B_0718043936;color=2;comment=Origin:DWSvevo3July_Chr7A_0671045351 / pred:cds2genome / prot-%25-ident:0.584767 / prot-%25-cov:0.208316 / score:0.600381 / scoreNC:0.600381 / exo_corr:modif_start / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / noStop / pbFrameshift / unexpectedSplicingSite / stopInFrame
+Chr7B	exonerate:coding2genome	mRNA	718043936	718051843	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1;Parent=DWSvevo3_Chr7B_0718043936
+Chr7B	exonerate:coding2genome	exon	718043936	718044097	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0718043936_mrna_1
+Chr7B	exonerate:coding2genome	exon	718046475	718047038	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0718043936_mrna_1
+Chr7B	exonerate:coding2genome	exon	718047040	718047318	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1_exon_3;Parent=DWSvevo3_Chr7B_0718043936_mrna_1
+Chr7B	exonerate:coding2genome	exon	718051601	718051843	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1_exon_4;Parent=DWSvevo3_Chr7B_0718043936_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718043936	718044097	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0718043936_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718046475	718047038	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0718043936_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718047040	718047318	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1_CDS_3;Parent=DWSvevo3_Chr7B_0718043936_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718051601	718051843	.	+	.	ID=DWSvevo3_Chr7B_0718043936_mrna_1_CDS_4;Parent=DWSvevo3_Chr7B_0718043936_mrna_1
+Chr7B	exonerate:protein2genome:local	gene	718334332	718346023	.	+	.	ID=DWSvevo3_Chr7B_0718334332;color=2;comment=Origin:DWSvevo3July_Chr7A_0732211246 / pred:prot2genome / prot-%25-ident:0.83937 / prot-%25-cov:0.88245 / score:0.88245 / scoreNC:0.88245 / exo_corr:modif_stop / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / noStart / pbFrameshift / unexpectedSplicingSite / stopInFrame
+Chr7B	exonerate:protein2genome:local	mRNA	718334332	718346023	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1;Parent=DWSvevo3_Chr7B_0718334332
+Chr7B	exonerate:protein2genome:local	exon	718334332	718334529	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718334534	718334587	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718337444	718338511	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_exon_3;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718342287	718342904	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_exon_4;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718343885	718344952	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_exon_5;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718345193	718346023	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_exon_6;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718334332	718334529	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718334534	718334587	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718337444	718338511	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_CDS_3;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718342287	718342904	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_CDS_4;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718343885	718344952	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_CDS_5;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718345193	718346023	.	+	.	ID=DWSvevo3_Chr7B_0718334332_mrna_1_CDS_6;Parent=DWSvevo3_Chr7B_0718334332_mrna_1
+Chr7B	exonerate:coding2genome	gene	718398202	718401312	.	+	.	ID=DWSvevo3_Chr7B_0718398202;color=2;comment=Origin:DWSvevo3July_Chr7A_0732211246 / pred:cds2genome / prot-%25-ident:0.839136 / prot-%25-cov:0.621459 / score:0.896005 / scoreNC:0.896005 / exo_corr:corrected_intron / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / pbFrameshift / unexpectedSplicingSite
+Chr7B	exonerate:coding2genome	mRNA	718398202	718401312	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1;Parent=DWSvevo3_Chr7B_0718398202
+Chr7B	exonerate:coding2genome	exon	718398202	718398822	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0718398202_mrna_1
+Chr7B	exonerate:coding2genome	exon	718399415	718399860	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0718398202_mrna_1
+Chr7B	exonerate:coding2genome	exon	718399891	718401055	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1_exon_3;Parent=DWSvevo3_Chr7B_0718398202_mrna_1
+Chr7B	exonerate:coding2genome	exon	718401067	718401312	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1_exon_4;Parent=DWSvevo3_Chr7B_0718398202_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718398202	718398822	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0718398202_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718399415	718399860	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0718398202_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718399891	718401055	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1_CDS_3;Parent=DWSvevo3_Chr7B_0718398202_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718401067	718401312	.	+	.	ID=DWSvevo3_Chr7B_0718398202_mrna_1_CDS_4;Parent=DWSvevo3_Chr7B_0718398202_mrna_1
+Chr7B	exonerate:coding2genome	gene	718443827	718445689	.	+	.	ID=DWSvevo3_Chr7B_0718443827;color=2;comment=Origin:DWSvevo3July_Chr7A_0732211246 / pred:cds2genome / prot-%25-ident:0.680129 / prot-%25-cov:0.364892 / score:0.707973 / scoreNC:0.707973 / exo_corr:modif_start / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / stopInFrame
+Chr7B	exonerate:coding2genome	mRNA	718443827	718445689	.	+	.	ID=DWSvevo3_Chr7B_0718443827_mrna_1;Parent=DWSvevo3_Chr7B_0718443827
+Chr7B	exonerate:coding2genome	exon	718443827	718445689	.	+	.	ID=DWSvevo3_Chr7B_0718443827_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0718443827_mrna_1
+Chr7B	exonerate:coding2genome	CDS	718443827	718445689	.	+	.	ID=DWSvevo3_Chr7B_0718443827_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0718443827_mrna_1
+Chr7B	exonerate:protein2genome:local	gene	718538014	718540814	.	-	.	ID=DWSvevo3_Chr7B_0718538014;color=2;comment=Origin:DWSvevo3July_Chr7A_0748550870 / pred:prot2genome / prot-%25-ident:0.648984 / prot-%25-cov:0.694726 / score:0.701783 / scoreNC:0.701783 / exo_corr:modif_stop / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / pbFrameshift / unexpectedSplicingSite / stopInFrame
+Chr7B	exonerate:protein2genome:local	mRNA	718538014	718540814	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1;Parent=DWSvevo3_Chr7B_0718538014
+Chr7B	exonerate:protein2genome:local	exon	718538014	718539042	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0718538014_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718539139	718539909	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0718538014_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718540028	718540144	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1_exon_3;Parent=DWSvevo3_Chr7B_0718538014_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718540146	718540814	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1_exon_4;Parent=DWSvevo3_Chr7B_0718538014_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718538014	718539042	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0718538014_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718539139	718539909	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0718538014_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718540028	718540144	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1_CDS_3;Parent=DWSvevo3_Chr7B_0718538014_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718540146	718540814	.	-	.	ID=DWSvevo3_Chr7B_0718538014_mrna_1_CDS_4;Parent=DWSvevo3_Chr7B_0718538014_mrna_1
+Chr7B	exonerate:protein2genome:local	gene	718842518	718846691	.	+	.	ID=DWSvevo3_Chr7B_0718842518;color=2;comment=Origin:DWSvevo3July_Chr7A_0671045351 / pred:prot2genome / prot-%25-ident:0.53468 / prot-%25-cov:0.563835 / score:0.580666 / scoreNC:0.580666 / exo_corr:modif_stop / exo_corr:modif_start / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / unexpectedSplicingSite
+Chr7B	exonerate:protein2genome:local	mRNA	718842518	718846691	.	+	.	ID=DWSvevo3_Chr7B_0718842518_mrna_1;Parent=DWSvevo3_Chr7B_0718842518
+Chr7B	exonerate:protein2genome:local	exon	718842518	718843567	.	+	.	ID=DWSvevo3_Chr7B_0718842518_mrna_1_exon_1;Parent=DWSvevo3_Chr7B_0718842518_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718843839	718844375	.	+	.	ID=DWSvevo3_Chr7B_0718842518_mrna_1_exon_2;Parent=DWSvevo3_Chr7B_0718842518_mrna_1
+Chr7B	exonerate:protein2genome:local	exon	718844928	718846691	.	+	.	ID=DWSvevo3_Chr7B_0718842518_mrna_1_exon_3;Parent=DWSvevo3_Chr7B_0718842518_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718842518	718843567	.	+	.	ID=DWSvevo3_Chr7B_0718842518_mrna_1_CDS_1;Parent=DWSvevo3_Chr7B_0718842518_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718843839	718844375	.	+	.	ID=DWSvevo3_Chr7B_0718842518_mrna_1_CDS_2;Parent=DWSvevo3_Chr7B_0718842518_mrna_1
+Chr7B	exonerate:protein2genome:local	CDS	718844928	718846691	.	+	.	ID=DWSvevo3_Chr7B_0718842518_mrna_1_CDS_3;Parent=DWSvevo3_Chr7B_0718842518_mrna_1

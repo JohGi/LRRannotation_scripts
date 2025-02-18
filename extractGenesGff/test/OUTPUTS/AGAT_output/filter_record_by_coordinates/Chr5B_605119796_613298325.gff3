@@ -1,0 +1,13 @@
+##gff-version 3
+Chr5B	exonerate:coding2genome	gene	607459149	607462202	.	-	.	ID=DWSvevo3_Chr5B_0607459149;color=3;comment=Origin:OSJnip_Chr03_31212255 / pred:cds2genome / prot-%25-ident:0.75442 / prot-%25-cov:0.759432 / score:0.78405 / scoreNC:0.78405 / exo_corr:NA / Origin-Fam:LRR-RLK / Origin-Class:Canonical Gene-Class:Canonical
+Chr5B	exonerate:coding2genome	mRNA	607459149	607462202	.	-	.	ID=DWSvevo3_Chr5B_0607459149_mrna_1;Parent=DWSvevo3_Chr5B_0607459149
+Chr5B	exonerate:coding2genome	exon	607459149	607462202	.	-	.	ID=DWSvevo3_Chr5B_0607459149_mrna_1_exon_1;Parent=DWSvevo3_Chr5B_0607459149_mrna_1
+Chr5B	exonerate:coding2genome	CDS	607459149	607462202	.	-	.	ID=DWSvevo3_Chr5B_0607459149_mrna_1_CDS_1;Parent=DWSvevo3_Chr5B_0607459149_mrna_1
+Chr5B	exonerate:protein2genome:local	gene	610238595	610241987	.	+	.	ID=DWSvevo3_Chr5B_0610238595;color=2;comment=Origin:DWSvevo3July_Chr2B_0003077237 / pred:prot2genome / prot-%25-ident:0.505906 / prot-%25-cov:0.550336 / score:0.550336 / scoreNC:0.550336 / exo_corr:modif_stop / Origin-Fam:NBS-LRR / Origin-Class:Non-canonical Gene-Class:Non-canonical / unexpectedSplicingSite
+Chr5B	exonerate:protein2genome:local	mRNA	610238595	610241987	.	+	.	ID=DWSvevo3_Chr5B_0610238595_mrna_1;Parent=DWSvevo3_Chr5B_0610238595
+Chr5B	exonerate:protein2genome:local	exon	610238595	610239464	.	+	.	ID=DWSvevo3_Chr5B_0610238595_mrna_1_exon_1;Parent=DWSvevo3_Chr5B_0610238595_mrna_1
+Chr5B	exonerate:protein2genome:local	exon	610239957	610241636	.	+	.	ID=DWSvevo3_Chr5B_0610238595_mrna_1_exon_2;Parent=DWSvevo3_Chr5B_0610238595_mrna_1
+Chr5B	exonerate:protein2genome:local	exon	610241691	610241987	.	+	.	ID=DWSvevo3_Chr5B_0610238595_mrna_1_exon_3;Parent=DWSvevo3_Chr5B_0610238595_mrna_1
+Chr5B	exonerate:protein2genome:local	CDS	610238595	610239464	.	+	.	ID=DWSvevo3_Chr5B_0610238595_mrna_1_CDS_1;Parent=DWSvevo3_Chr5B_0610238595_mrna_1
+Chr5B	exonerate:protein2genome:local	CDS	610239957	610241636	.	+	.	ID=DWSvevo3_Chr5B_0610238595_mrna_1_CDS_2;Parent=DWSvevo3_Chr5B_0610238595_mrna_1
+Chr5B	exonerate:protein2genome:local	CDS	610241691	610241987	.	+	.	ID=DWSvevo3_Chr5B_0610238595_mrna_1_CDS_3;Parent=DWSvevo3_Chr5B_0610238595_mrna_1
