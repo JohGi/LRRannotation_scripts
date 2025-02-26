@@ -1,0 +1,6 @@
+alt_gff_list: "CONFIG/gff_list.tsv"
+ref_gff: "/storage/replicated/cirad/projects/GE2POP/2024_ANNOT_PRIM/01_raw_data/TEST_DATA/GFF_FOR_TEST_20241110/CHR_1/Hsap_1_CDS1_OMM.gff"
+ref_name: "HsapChr1Ref"
+CDScompR_path: "/lustre/girodollej/2024_LRR/03_scripts/CDScompR/CDScompR/script/CDScompR.py"
+sortGFF_path: "/lustre/girodollej/2024_LRR/03_scripts/LRRtransfer/GeneModelTransfer/SCRIPT/sort_gff.py"
+merge_path: "/lustre/girodollej/2024_LRR/03_scripts/LRRannotation_scripts/merge_compR/merge_compR.py"

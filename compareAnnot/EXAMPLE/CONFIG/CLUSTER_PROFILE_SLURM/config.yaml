@@ -1,0 +1,41 @@
+
+## Provide here the default resources ('partition' and/or 'mem_mb') for all the steps
+# The 'mem_mb' value should be an integer (representing an amount of megabytes = Mb of RAM) and will be passed to the --mem-per-cpu sbatch option when submitting jobs
+default-resources:
+  - mem_mb=2000
+  - partition=agap_normal
+
+
+## Set resources ('partition' and/or 'mem_mb') for specific steps
+set-resources:
+  - Trimming_DemultFastqs:mem_mb=2000
+
+
+
+## Set a number of threads for specific steps (if not specified, default = 1)
+# This number will be passed to the --cpus-per-task sbatch option when submitting jobs
+set-threads:
+  - Trimming_DemultFastqs=1
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+cluster:
+  mkdir -p Logs &&
+  WILDCARDS_NAMES=$(echo {wildcards} | awk -F "=|," '{{WC=""; for (i=2; i<=NF; i+=2) {{WC=WC"_"$i}}; print WC}}') &&
+  sbatch
+  --partition={resources.partition}
+  --cpus-per-task={threads}
+  --mem-per-cpu={resources.mem_mb}M
+  --job-name=CA.{rule}
+  --output=Logs/{rule}${{WILDCARDS_NAMES}}.%j.log
+
+
+latency-wait: 60
+jobs: 200
+use-conda: True
+use-singularity: True
+use-envmodules: True
+printshellcmds: True
+
+
