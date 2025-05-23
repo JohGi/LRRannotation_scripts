@@ -1,4 +1,4 @@
-function create_fake_infoLocus(){
+function create_fake_infoLocus() {
   local gff=$1
   local out_file=$2
   awk -F '[ \t;]' 'BEGIN{OFS="\t"}{if ($3 == "gene"){
@@ -8,5 +8,5 @@ function create_fake_infoLocus(){
         }
       }
       print Gene_ID, "UC", "Canonical"
-    }}' $gff > $out_file
+    }}' $gff >$out_file
 }
