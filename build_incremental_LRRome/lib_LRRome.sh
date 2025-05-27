@@ -286,7 +286,6 @@ write_infos() {
   echo "- Expertised gff files in: ${exp_gff_list}" >> LRRome_incremental_build_infos.txt
 
   echo -e "\n Output files:" >> LRRome_incremental_build_infos.txt
-  echo "- Exp reference fasta file: ${exp_LRRome_dir}/LRR_ANNOT/${exp_prefix}.fasta" >> LRRome_incremental_build_infos.txt
   echo "- Exp gff in ${exp_LRRome_dir}/LRR_ANNOT/${exp_prefix}_LRR.gff" >> LRRome_incremental_build_infos.txt
   echo "- List of removed non-LRR genes: ${exp_LRRome_dir}/LRRprofile/not_LRR_genes.list" >> LRRome_incremental_build_infos.txt
   echo "- Exp LRRome: ${exp_LRRome_dir}/LRRome" >> LRRome_incremental_build_infos.txt
