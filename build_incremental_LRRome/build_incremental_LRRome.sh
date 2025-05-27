@@ -39,19 +39,20 @@ main(){
   clean_gff $GFF_LIST $EXP_PREFIX ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
   
   build_exp_LRRome_multiGFF $EXP_PREFIX $EXP_REF_GENOME ${exp_LRRome_out_dir}/clean_gff.list $GMT_SIF $SEQ_TYPE ${CONCAT_AND_RM_REPEAT_GENES} ${LRRPROFILER_SIF} ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
-  exit 0
   exp_LRRome=$(realpath ${exp_LRRome_out_dir}/LRRome)
-  merge_LRRome $INITIAL_LRROME $exp_LRRome 03_LRRome
+  exp_LRRome_gff=$(realpath ${exp_LRRome_out_dir}/LRR_ANNOT/${EXP_PREFIX}_LRR.gff)
 
-  concat_gff $INIT_PREFIX $EXP_PREFIX $INITIAL_LRR_GFF
+  final_LRRome_out_dir=02_LRRome
+  merge_LRRome $INITIAL_LRROME $exp_LRRome $final_LRRome_out_dir
 
-  exp_LRR_gff=$(realpath ${exp_LRRome_out_dir}/LRR_ANNOT/${EXP_PREFIX}_LRR.gff)
-  create_info_locus 04_final_GFF/${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff $EXP_PREFIX $INIT_PREFIX
+  final_gff_out_dir=03_final_GFF
+  concat_gff $INITIAL_LRR_GFF $exp_LRRome_gff ${final_gff_out_dir} ${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff
 
-  compute_gene_stats 04_final_GFF/${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff 04_final_GFF/${INIT_PREFIX}_${EXP_PREFIX}_gene_stats.tsv
+  create_info_locus ${exp_LRRome_gff} ${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_info_locus.txt
 
-  write_infos $EXP_PREFIX
+  compute_gene_stats ${exp_LRRome_gff} ${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_gene_stats.tsv
 
+  write_infos $INITIAL_LRROME $GFF_LIST $INIT_PREFIX $EXP_PREFIX $exp_LRRome_out_dir $final_LRRome_out_dir $final_gff_out_dir
 }
 
 main "$@"
