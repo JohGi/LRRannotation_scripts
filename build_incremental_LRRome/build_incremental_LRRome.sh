@@ -1,11 +1,11 @@
 #!/bin/bash
 
-source ./lib_LRRome.sh
+source /storage/replicated/cirad_users/girodollej/2024_LRR/03_scripts/LRRannotation_scripts/build_incremental_LRRome/lib_LRRome.sh
 
 ## ----------------------------------- MAIN ------------------------------------------------ ##
 
 main(){
-  gff_list=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3_LRR_ANNOT_2025_01/01_raw_data/01_gff_EXP/gff_list_order.txt
+  gff_list=/lustre/girodollej/2024_LRR/02_results/XX_DEV/BILLRome/launch_BILLRome_older_version/gff_list_order.txt
   initial_LRRome=/storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/LRRome
   initial_LRR_gff=/storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/Oryza_Nipponbare_IRGSP-1.0_LRR-CR__20220209.gff
   exp_ref_genome=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3/Data_Package_01_12_22/DW_Svevo4.fasta

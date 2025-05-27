@@ -13,10 +13,11 @@ if ! command -v agat &> /dev/null; then
 fi
 
 
-scripts=/lustre/girodollej/2024_LRR/03_scripts/LRRtransfer/GeneModelTransfer/SCRIPT
+scripts=/home/girodollej/replicated/2024_LRR/03_scripts/LRRtransfer/GeneModelTransfer/SCRIPT
 #LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler_v0.21.sif
 LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler.sif
-concatAndRmRepeatGenes=/home/girodollej/scratch/2024_LRR/03_scripts/LRRannotation_scripts/build_incremental_LRRome/concatAndRmRepeatGenes.py
+concatAndRmRepeatGenes=/storage/replicated/cirad_users/girodollej/2024_LRR/03_scripts/LRRannotation_scripts/build_incremental_LRRome/concatAndRmRepeatGenes.py
+GMT_SIF=/storage/replicated/cirad/projects/GE2POP/2023_LRR/LRRtransfer_image/v2_20250407/LRRtransfer.sif
 
 
 ## ------------------------------- FUNCTIONS --------------------------------------------- ##
@@ -103,8 +104,8 @@ build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build
   cd LRRprofile
 
   if [[ ${seq_type} == "FSprot" ]] ; then
-    echo -e python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot"\n"
-    python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot
+    echo -e singularity exec $GMT_SIF python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot"\n"
+    singularity exec $GMT_SIF python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot
   elif [[ ${seq_type} == "prot" ]] ; then
     echo -e agat_sp_extract_sequences.pl -g ${input_gff} -f ${input_fasta} -t cds -p -o ${new_prefix}_proteins.fasta"\n"
     agat_sp_extract_sequences.pl -g ${input_gff} -f ${input_fasta} -t cds -p -o ${new_prefix}_proteins.fasta
