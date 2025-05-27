@@ -1,40 +1,60 @@
 #!/bin/bash
+set -euo pipefail
 
-source /storage/replicated/cirad_users/girodollej/2024_LRR/03_scripts/LRRannotation_scripts/build_incremental_LRRome/lib_LRRome.sh
+### LAUNCHING:
+# ./build_incremental_LRRome.sh BILRRome_config.sh
+
+## With BILRRome_config.sh setting-up the following variables (var=value, one variable per ligne):
+# GMT_DIR: path to GeneModelTransfer cloned repo
+# GMT_SIF: path to GeneModelTransfer .sif
+# LRRPROFILER_SIF: path to LRRprofiler .sif
+# GFF_LIST: path to a txt file listing all expertised gff
+# INITIAL_LRROME: path the initial LRRome (built by GMT create_LRRome.sh)
+# INITIAL_LRR_GFF: path to the GFF associated with the initial LRRome
+# EXP_REF_GENOME: path to the reference genome of the expertised genes
+# EXP_PREFIX: prefix for the expertised LRRome (eg: DWSvevo3January)
+# INIT_PREFIX: prefix for the initial LRRome (eg: IRGSP)
+# SEQ_TYPE: either 'FSprot' (will extract sequences with Extract_sequences_from_genome.py accounting for frameshifts) or 'prot' (will extract sequences with AGAT accounting for CDS phase)
+
 
 ## ----------------------------------- MAIN ------------------------------------------------ ##
 
 main(){
-  gff_list=/lustre/girodollej/2024_LRR/02_results/XX_DEV/BILLRome/launch_BILLRome_older_version/gff_list_order.txt
-  initial_LRRome=/storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/LRRome
-  initial_LRR_gff=/storage/replicated/cirad/projects/GE2POP/2023_LRR/IRGSP/Oryza_Nipponbare_IRGSP-1.0_LRR-CR__20220209.gff
-  exp_ref_genome=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3/Data_Package_01_12_22/DW_Svevo4.fasta
-  exp_prefix=DWSvevo3January
-  init_prefix=IRGSP
-  seq_type=FSprot # FSprot (will extract sequences with Extract_sequences_from_genome.py accounting for frameshifts) or prot (will extract sequences with AGAT accounting for CDS phase)
 
-  mkdir -p 02_build_exp_LRRome 03_LRRome 04_final_GFF
+  # importing variables and functions
+  CONFIG_FILE=$1
 
-  clean_gff $(realpath 01_gff_EXP) $exp_prefix
+  SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+  source ${SCRIPT_DIR}/lib_LRRome.sh
 
-  build_exp_LRRome_multiGFF $exp_prefix $exp_ref_genome $gff_list $seq_type
+  chmod 755 $CONFIG_FILE && source $CONFIG_FILE
+  require_variables GMT_DIR GMT_SIF LRRPROFILER_SIF GFF_LIST INITIAL_LRROME INITIAL_LRR_GFF EXP_REF_GENOME EXP_PREFIX INIT_PREFIX SEQ_TYPE 
 
-  #build_exp_LRRome $exp_prefix $exp_ref_folder
+  CONCAT_AND_RM_REPEAT_GENES=${SCRIPT_DIR}/concatAndRmRepeatGenes.py
 
-  exp_LRRome=$(realpath 02_build_exp_LRRome/LRRome)
-  merge_LRRome $initial_LRRome $exp_LRRome 03_LRRome
+  # building new LRRome
+  #mkdir -p 02_build_exp_LRRome 03_LRRome 04_final_GFF
 
-  concat_gff $init_prefix $exp_prefix $initial_LRR_gff
+  exp_LRRome_out_dir=01_build_exp_LRRome
+  # clean_gff $GFF_LIST $EXP_PREFIX ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
+  
+  # build_exp_LRRome_multiGFF $EXP_PREFIX $EXP_REF_GENOME ${exp_LRRome_out_dir}/clean_gff.list $GMT_SIF $SEQ_TYPE ${CONCAT_AND_RM_REPEAT_GENES} ${LRRPROFILER_SIF} ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
+  exp_LRRome=$(realpath ${exp_LRRome_out_dir}/LRRome)
+  exp_LRRome_gff=$(realpath ${exp_LRRome_out_dir}/LRR_ANNOT/${EXP_PREFIX}_LRR.gff)
 
-  exp_LRR_gff=$(realpath 02_build_exp_LRRome/LRR_ANNOT/${exp_prefix}_LRR.gff)
-  create_info_locus 04_final_GFF/${init_prefix}_${exp_prefix}_LRR.gff $exp_prefix $init_prefix
+  final_LRRome_out_dir=02_LRRome
+  # merge_LRRome $INITIAL_LRROME $exp_LRRome $final_LRRome_out_dir
 
-  compute_gene_stats 04_final_GFF/${init_prefix}_${exp_prefix}_LRR.gff 04_final_GFF/${init_prefix}_${exp_prefix}_gene_stats.tsv
+  final_gff_out_dir=03_final_GFF
+  # concat_gff $INITIAL_LRR_GFF $exp_LRRome_gff ${final_gff_out_dir} ${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff
+  final_gff=${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff
 
-  write_infos $exp_prefix
+  create_info_locus ${final_gff} ${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_info_locus.txt
 
+  compute_gene_stats ${final_gff} ${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_gene_stats.tsv
+
+  write_infos $INITIAL_LRROME $GFF_LIST $INIT_PREFIX $EXP_PREFIX $exp_LRRome_out_dir $final_LRRome_out_dir $final_gff_out_dir
 }
 
-main
+main "$@"
 
-# sbatch --partition=agap_normal --mem=20G --wrap="/home/girodollej/scratch/2024_LRR/03_scripts/06_LRRTRANSFER_LAUNCH_PREP/build_incremental_LRRome.sh"

@@ -13,14 +13,18 @@ if ! command -v agat &> /dev/null; then
 fi
 
 
-scripts=/home/girodollej/replicated/2024_LRR/03_scripts/LRRtransfer/GeneModelTransfer/SCRIPT
-#LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler_v0.21.sif
-LRRprofiler_sif=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler.sif
-concatAndRmRepeatGenes=/storage/replicated/cirad_users/girodollej/2024_LRR/03_scripts/LRRannotation_scripts/build_incremental_LRRome/concatAndRmRepeatGenes.py
-GMT_SIF=/storage/replicated/cirad/projects/GE2POP/2023_LRR/LRRtransfer_image/v2_20250407/LRRtransfer.sif
-
-
 ## ------------------------------- FUNCTIONS --------------------------------------------- ##
+
+require_variables() {
+  local missing=0
+  for varname in "$@"; do
+    if [[ -z "${!varname+x}" || -z "${!varname}" ]]; then
+      echo "Error: variable '$varname' is not set or is empty." >&2
+      missing=1
+    fi
+  done
+  return $missing
+}
 
 rmCR() {
   local file=$1
@@ -32,9 +36,11 @@ rmCR() {
 
 clean_gff() {             # >> Creates 02_build_exp_LRRome/CLEANED_GFF
   echo -e "\n1/ CLEANING EXP GFF FILES...\n"
-  local gff_dir=$1
+  local gff_list=$1
   local cleaner_chr_prefix=$2
-  cd 02_build_exp_LRRome
+  local scripts=$3
+  local out_dir=$4
+  mkdir -p $out_dir && cd $out_dir
   mkdir -p CLEANED_GFF GFF_chrOK
 
   ## Change the chromosome names in the gff files if needed
@@ -42,22 +48,27 @@ clean_gff() {             # >> Creates 02_build_exp_LRRome/CLEANED_GFF
   for chr_num in $(seq 1 7); do
     for genome in A B; do
       chr=${chr_num}${genome}
-      for gff in ${gff_dir}/*${chr}*gff; do
-        awk -v chr=$chr 'BEGIN{OFS=FS="\t"}{$1="Chr"chr; print $0}' $gff > GFF_chrOK/$(basename $gff)
+      for gff in $(cat ${gff_list}); do
+        if [[ $gff == *hr${chr}* ]]; then
+          awk -v chr=$chr 'BEGIN{OFS=FS="\t"}{$1="Chr"chr; print $0}' $gff > GFF_chrOK/$(basename $gff)
+        fi 
       done
     done
   done
 
   ## Clean the gff files with gff_cleaner
   echo -e "... Running gff_cleaner.py...\n"
-  for f in GFF_chrOK/*.gff; do
-    prefix=$(basename $f)
-    echo -e python3 ${scripts}/VR/gff_cleaner.py -a -p $cleaner_chr_prefix -g $f -o CLEANED_GFF/cleaned_${prefix}"\n"
-    python3 ${scripts}/VR/gff_cleaner.py -a -p $cleaner_chr_prefix -g $f -o CLEANED_GFF/cleaned_${prefix}
+  rm -f clean_gff.list
+  for init_gff in $(cat ${gff_list}); do
+    gff_name=$(basename $init_gff)
+    gff=GFF_chrOK/${gff_name}
+    echo -e python3 ${scripts}/VR/gff_cleaner.py -a -p $cleaner_chr_prefix -g $gff -o CLEANED_GFF/cleaned_${gff_name}"\n"
+    python3 ${scripts}/VR/gff_cleaner.py -a -p $cleaner_chr_prefix -g $gff -o CLEANED_GFF/cleaned_${gff_name}
+    echo $(realpath CLEANED_GFF/cleaned_${gff_name}) >> clean_gff.list
   done | grep -v "^WARNING: incompatible bounds" > gff_cleaner.out
 
   ## Count the genes in the gff files
-  echo -e "... Counting genes in each gff in 02_build_exp_LRRome/gff_gene_count.txt...\n"
+  echo -e "... Counting genes in each gff in ${out_dir}/gff_gene_count.txt...\n"
   grep -c -w gene CLEANED_GFF/cleaned_*gff > gff_gene_count.txt
 
   rm -r GFF_chrOK
@@ -75,17 +86,21 @@ count_genes_per_chr() {
 build_exp_LRRome_multiGFF(){
   local new_prefix=$1
   local input_fasta=$2
-  local gff_list=$3
-  local seq_type=$4
+  local gff_list=$(realpath $3)
+  local GMT_sif=$4
+  local seq_type=$5
+  local concatAndRmRepeatGenes=$6
+  local LRRprofiler_sif=$7
+  local scripts=$8
+  local out_dir=$9
 
-  mkdir -p 02_build_exp_LRRome/LRRprofile
-  cd 02_build_exp_LRRome/LRRprofile
-  #cat ../CLEANED_GFF/cleaned_*.gff > ${new_prefix}.gff
-  python3 $concatAndRmRepeatGenes --gff_list $gff_list --prefix ${PWD}/../CLEANED_GFF/cleaned_ --output ${new_prefix}.gff
+  mkdir -p ${out_dir}/LRRprofile
+  cd ${out_dir}/LRRprofile
+  python3 $concatAndRmRepeatGenes --gff_list $gff_list --output ${new_prefix}.gff
 
   cd ../..
 
-  build_exp_LRRome $new_prefix $input_fasta ${new_prefix}.gff ${seq_type}
+  build_exp_LRRome $new_prefix $input_fasta ${new_prefix}.gff ${GMT_sif} ${seq_type} ${LRRprofiler_sif} ${scripts} ${out_dir}
 }
 
 build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build_exp_LRRome/LRRprofile and 02_build_exp_LRRome/LRRome
@@ -93,19 +108,23 @@ build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build
   local new_prefix=$1
   local input_fasta=$2
   local input_gff=$3
-  local seq_type=$4
-  mkdir -p 02_build_exp_LRRome
-  cd 02_build_exp_LRRome
+  local GMT_sif=$4
+  local seq_type=$5
+  local LRRprofiler_sif=$6
+  local scripts=$7
+  local out_dir=$8
+  mkdir -p ${out_dir}
+  cd ${out_dir}
 
   ## Detect and classify LRR containing genes with LRRprofiler and remove non LRR genes (write the final gff in LRR_ANNOT)
-  echo -e "... Running LRRprofiler and removing non-LRR genes >> see final gff in 02_build_exp_LRRome/LRR_ANNOT/"${new_prefix}"_LRR.gff...\n"
+  echo -e "... Running LRRprofiler and removing non-LRR genes >> see final gff in ${out_dir}/LRR_ANNOT/"${new_prefix}"_LRR.gff...\n"
 
   mkdir -p LRRprofile LRR_ANNOT
   cd LRRprofile
 
   if [[ ${seq_type} == "FSprot" ]] ; then
-    echo -e singularity exec $GMT_SIF python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot"\n"
-    singularity exec $GMT_SIF python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot
+    echo -e singularity exec $GMT_sif python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot"\n"
+    singularity exec $GMT_sif python3 ${scripts}/Extract_sequences_from_genome.py -g ${input_gff} -f ${input_fasta} -o ${new_prefix}_proteins.fasta -t FSprot
   elif [[ ${seq_type} == "prot" ]] ; then
     echo -e agat_sp_extract_sequences.pl -g ${input_gff} -f ${input_fasta} -t cds -p -o ${new_prefix}_proteins.fasta"\n"
     agat_sp_extract_sequences.pl -g ${input_gff} -f ${input_fasta} -t cds -p -o ${new_prefix}_proteins.fasta
@@ -129,16 +148,16 @@ build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build
   remove_genes_from_gff ${new_prefix}_LRR_info.gff not_LRR_genes.list ../LRR_ANNOT/${new_prefix}_LRR.gff
 
   ## Compare the number of genes per chromosome before and after removing non-LRR genes
-  echo -e "... Counting genes before and after removing non-LRR genes >> see 02_build_exp_LRRome/LRR_ANNOT/genes_per_chr_[before/after]RemovingNonLRR.txt ...\n"
+  echo -e "... Counting genes before and after removing non-LRR genes >> see ${out_dir}/LRR_ANNOT/genes_per_chr_[before/after]RemovingNonLRR.txt ...\n"
   count_genes_per_chr ${new_prefix}_LRR_info.gff ../LRR_ANNOT/genes_per_chr_beforeRemovingNonLRR.txt
   count_genes_per_chr ../LRR_ANNOT/${new_prefix}_LRR.gff ../LRR_ANNOT/genes_per_chr_afterRemovingNonLRR.txt
 
   cd ..
 
   ## Build LRRome (in a LRRome folder)
-  echo -e "\n... Running create_LRRome.sh in 02_build_exp_LRRome/LRRome...\n"
-  echo -e singularity exec $GMT_SIF ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}"\n"
-  singularity exec $GMT_SIF ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}
+  echo -e "\n... Running create_LRRome.sh in ${out_dir}/LRRome...\n"
+  echo -e singularity exec $GMT_sif ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}"\n"
+  singularity exec $GMT_sif ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}
 
   cd ..
 }
@@ -150,7 +169,7 @@ merge_LRRome() {         # >> Fills 03_LRRome
   local LRRome2=$2
   local LRRome_new=$3
 
-  cd $LRRome_new
+  mkdir -p $LRRome_new && cd $LRRome_new
   mkdir -p REF_EXONS REF_PEP REF_cDNA
 
   for type in EXONS PEP cDNA; do
@@ -170,24 +189,22 @@ merge_LRRome() {         # >> Fills 03_LRRome
 
 concat_gff() {         # >> Fills 04_final_GFF
   echo -e "\n4/ MERGING EXPERTISED AND INITIAL GFF FILES...\n"
-  local init_prefix=$1
-  local exp_prefix=$2
-  local initial_gff=$3
-  cd 04_final_GFF
+  local initial_gff=$1
+  local exp_LRRome_gff=$2
+  local final_gff_out_dir=$3
+  local final_gff_name=$4
+  
+  mkdir -p ${final_gff_out_dir}
+  cp $initial_gff ${final_gff_out_dir}/${final_gff_name}
+  cat ${exp_LRRome_gff} >> ${final_gff_out_dir}/${final_gff_name}
+  rmCR ${final_gff_out_dir}/${final_gff_name}
 
-  cp $initial_gff ${init_prefix}_${exp_prefix}_LRR.gff
-  cat ../02_build_exp_LRRome/LRR_ANNOT/${exp_prefix}_LRR.gff >> ${init_prefix}_${exp_prefix}_LRR.gff
-  rmCR ${init_prefix}_${exp_prefix}_LRR.gff
-
-  cd ..
 }
 
 create_info_locus() {         # >> Fills 04_final_GFF
   echo -e "\n5/ CREATING THE INFO LOCUS FILE...\n"
   local gff=$1
-  local exp_prefix=$2
-  local init_prefix=$3
-
+  local output=$2
 
   awk -F '[ \t;]' 'BEGIN{OFS="\t"}{if ($3 == "gene"){
     for (i = 1; i <= NF; i++) {
@@ -205,7 +222,7 @@ create_info_locus() {         # >> Fills 04_final_GFF
       }
     }
     print Gene_ID, Fam, Class
-  }}' $gff >> 04_final_GFF/${init_prefix}_${exp_prefix}_info_locus.txt
+  }}' $gff > $output
 
 }
 
@@ -255,26 +272,32 @@ compute_gene_stats_generic_gff(){
 
 
 write_infos() {
-  local new_prefix=$1
+  local initial_LRRome=$1
+  local exp_gff_list=$2
+  local init_prefix=$3
+  local exp_prefix=$4
+  local exp_LRRome_dir=$5
+  local LRRome_dir=$6
+  local final_gff_dir=$7
+
   date > LRRome_incremental_build_infos.txt
 
   echo -e "\n Input files:" >> LRRome_incremental_build_infos.txt
   echo "- Initial LRRome: "$initial_LRRome >> LRRome_incremental_build_infos.txt
-  echo "- Expertised gff files in: 01_gff_EXP" >> LRRome_incremental_build_infos.txt
+  echo "- Expertised gff files in: ${exp_gff_list}" >> LRRome_incremental_build_infos.txt
 
   echo -e "\n Output files:" >> LRRome_incremental_build_infos.txt
-  echo "- Exp reference fasta file: 02_build_exp_LRRome/LRR_ANNOT/${new_prefix}.fasta" >> LRRome_incremental_build_infos.txt
-  echo "- Exp gff in 02_build_exp_LRRome/LRR_ANNOT/${new_prefix}_LRR.gff" >> LRRome_incremental_build_infos.txt
-  echo "- List of removed non-LRR genes: 02_build_exp_LRRome/LRRprofile/not_LRR_genes.list" >> LRRome_incremental_build_infos.txt
-  echo "- Exp LRRome: 02_build_exp_LRRome/LRRome" >> LRRome_incremental_build_infos.txt
-  echo "- New LRRome: 03_LRRome" >> LRRome_incremental_build_infos.txt
-  echo "- New gff file: 04_final_GFF/${init_prefix}_${exp_prefix}_LRR.gff" >> LRRome_incremental_build_infos.txt
-  echo "- Locus info file: 04_final_GFF/${init_prefix}_${exp_prefix}_info_locus.txt" >> LRRome_incremental_build_infos.txt
+  echo "- Exp gff in ${exp_LRRome_dir}/LRR_ANNOT/${exp_prefix}_LRR.gff" >> LRRome_incremental_build_infos.txt
+  echo "- List of removed non-LRR genes: ${exp_LRRome_dir}/LRRprofile/not_LRR_genes.list" >> LRRome_incremental_build_infos.txt
+  echo "- Exp LRRome: ${exp_LRRome_dir}/LRRome" >> LRRome_incremental_build_infos.txt
+  echo "- New LRRome: ${LRRome_dir}" >> LRRome_incremental_build_infos.txt
+  echo "- New gff file: ${final_gff_dir}/${init_prefix}_${exp_prefix}_LRR.gff" >> LRRome_incremental_build_infos.txt
+  echo "- Locus info file: ${final_gff_dir}/${init_prefix}_${exp_prefix}_info_locus.txt" >> LRRome_incremental_build_infos.txt
 
   echo -e "\n Stats files:" >> LRRome_incremental_build_infos.txt
-  echo "- Gene numbers per chromosome before removing non-LRR genes: 02_build_exp_LRRome/LRR_ANNOT/genes_per_chr_beforeRemovingNonLRR.txt" >> LRRome_incremental_build_infos.txt
-  echo "- Gene numbers per chromosome after removing non-LRR genes: 02_build_exp_LRRome/LRR_ANNOT/genes_per_chr_afterRemovingNonLRR.txt" >> LRRome_incremental_build_infos.txt
-  echo "- Final LRRome gene stats in tidy format: 04_final_GFF/${init_prefix}_${exp_prefix}_gene_stats.tsv" >> LRRome_incremental_build_infos.txt
+  echo "- Gene numbers per chromosome before removing non-LRR genes: ${exp_LRRome_dir}/LRR_ANNOT/genes_per_chr_beforeRemovingNonLRR.txt" >> LRRome_incremental_build_infos.txt
+  echo "- Gene numbers per chromosome after removing non-LRR genes: ${exp_LRRome_dir}/LRR_ANNOT/genes_per_chr_afterRemovingNonLRR.txt" >> LRRome_incremental_build_infos.txt
+  echo "- Final LRRome gene stats in tidy format: ${final_gff_dir}/${init_prefix}_${exp_prefix}_gene_stats.tsv" >> LRRome_incremental_build_infos.txt
 
   echo -e "\n\nSee LRRome_incremental_build_infos.txt for run information.\n"
 }
