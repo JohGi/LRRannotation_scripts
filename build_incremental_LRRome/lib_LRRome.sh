@@ -137,8 +137,8 @@ build_exp_LRRome() {        # >> Creates 02_build_exp_LRRome/LRR_ANNOT, 02_build
 
   ## Build LRRome (in a LRRome folder)
   echo -e "\n... Running create_LRRome.sh in 02_build_exp_LRRome/LRRome...\n"
-  echo -e ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}"\n"
-  ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}
+  echo -e singularity exec $GMT_SIF ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}"\n"
+  singularity exec $GMT_SIF ${scripts}/../bin/create_LRRome.sh ${input_fasta} $PWD/LRR_ANNOT/${new_prefix}_LRR.gff $PWD NULL ${scripts}
 
   cd ..
 }
@@ -208,6 +208,7 @@ create_info_locus() {         # >> Fills 04_final_GFF
   }}' $gff >> 04_final_GFF/${init_prefix}_${exp_prefix}_info_locus.txt
 
 }
+
 
 compute_gene_stats(){         # >> Fills 04_final_GFF
   echo -e "\n6/ COMPUTING THE FINAL GFF GENE STATS...\n"
