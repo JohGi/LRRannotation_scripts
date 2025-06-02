@@ -16,10 +16,9 @@ set -euo pipefail
 # INIT_PREFIX: prefix for the initial LRRome (eg: IRGSP)
 # SEQ_TYPE: either 'FSprot' (will extract sequences with Extract_sequences_from_genome.py accounting for frameshifts) or 'prot' (will extract sequences with AGAT accounting for CDS phase)
 
-
 ## ----------------------------------- MAIN ------------------------------------------------ ##
 
-main(){
+main() {
 
   # importing variables and functions
   CONFIG_FILE=$1
@@ -28,25 +27,23 @@ main(){
   source ${SCRIPT_DIR}/lib_LRRome.sh
 
   chmod 755 $CONFIG_FILE && source $CONFIG_FILE
-  require_variables GMT_DIR GMT_SIF LRRPROFILER_SIF GFF_LIST INITIAL_LRROME INITIAL_LRR_GFF EXP_REF_GENOME EXP_PREFIX INIT_PREFIX SEQ_TYPE 
+  require_variables GMT_DIR GMT_SIF LRRPROFILER_SIF GFF_LIST INITIAL_LRROME INITIAL_LRR_GFF EXP_REF_GENOME EXP_PREFIX INIT_PREFIX SEQ_TYPE
 
   CONCAT_AND_RM_REPEAT_GENES=${SCRIPT_DIR}/concatAndRmRepeatGenes.py
 
   # building new LRRome
-  #mkdir -p 02_build_exp_LRRome 03_LRRome 04_final_GFF
-
   exp_LRRome_out_dir=01_build_exp_LRRome
-  # clean_gff $GFF_LIST $EXP_PREFIX ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
-  
-  # build_exp_LRRome_multiGFF $EXP_PREFIX $EXP_REF_GENOME ${exp_LRRome_out_dir}/clean_gff.list $GMT_SIF $SEQ_TYPE ${CONCAT_AND_RM_REPEAT_GENES} ${LRRPROFILER_SIF} ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
+  clean_gff $GFF_LIST $EXP_PREFIX ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
+
+  build_exp_LRRome_multiGFF $EXP_PREFIX $EXP_REF_GENOME ${exp_LRRome_out_dir}/clean_gff.list $GMT_SIF $SEQ_TYPE ${CONCAT_AND_RM_REPEAT_GENES} ${LRRPROFILER_SIF} ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
   exp_LRRome=$(realpath ${exp_LRRome_out_dir}/LRRome)
   exp_LRRome_gff=$(realpath ${exp_LRRome_out_dir}/LRR_ANNOT/${EXP_PREFIX}_LRR.gff)
 
   final_LRRome_out_dir=02_LRRome
-  # merge_LRRome $INITIAL_LRROME $exp_LRRome $final_LRRome_out_dir
+  merge_LRRome $INITIAL_LRROME $exp_LRRome $final_LRRome_out_dir
 
   final_gff_out_dir=03_final_GFF
-  # concat_gff $INITIAL_LRR_GFF $exp_LRRome_gff ${final_gff_out_dir} ${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff
+  concat_gff $INITIAL_LRR_GFF $exp_LRRome_gff ${final_gff_out_dir} ${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff
   final_gff=${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff
 
   create_info_locus ${final_gff} ${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_info_locus.txt
@@ -57,4 +54,3 @@ main(){
 }
 
 main "$@"
-
