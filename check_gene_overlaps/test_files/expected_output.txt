@@ -1,0 +1,9 @@
+
+- Overlap found in file: test2.gff
+	Current gene:			chr1	source	gene	150	260	.	+	.	ID=gene4;Name=Gene4_overlaps_gene1_and_gene2
+	-- Overlaps with: [test1.gff]	chr1	source	gene	100	200	.	+	.	ID=gene1;Name=Gene1
+	-- Overlaps with: [test1.gff]	chr1	source	gene	250	300	.	+	.	ID=gene2;Name=Gene2
+
+- Overlap found in file: test2.gff
+	Current gene:			chr2	source	gene	550	700	.	-	.	ID=gene6;Name=Gene6_overlaps_gene3
+	-- Overlaps with: [test1.gff]	chr2	source	gene	500	600	.	-	.	ID=gene3;Name=Gene3
