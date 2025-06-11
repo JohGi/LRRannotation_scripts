@@ -8,7 +8,8 @@ set -euo pipefail
 # GMT_DIR: path to GeneModelTransfer cloned repo
 # GMT_SIF: path to GeneModelTransfer .sif
 # LRRPROFILER_SIF: path to LRRprofiler .sif
-# GFF_LIST: path to a txt file listing all expertised gff
+# GFF_LIST: path to a txt file listing all expertised gff (from the most recent to the least recent)
+# EXTRA_GFF_LIST: path to a txt file listing extra expertised gff to add to the pool of expertised gff to run LRRprofiler. The genes from these gff won't be added to the new LRRome. Set to "" if you don't have any.
 # INITIAL_LRROME: path the initial LRRome (built by GMT create_LRRome.sh)
 # INITIAL_LRR_GFF: path to the GFF associated with the initial LRRome
 # EXP_REF_GENOME: path to the reference genome of the expertised genes
@@ -16,33 +17,55 @@ set -euo pipefail
 # INIT_PREFIX: prefix for the initial LRRome (eg: IRGSP)
 # SEQ_TYPE: either 'FSprot' (will extract sequences with Extract_sequences_from_genome.py accounting for frameshifts) or 'prot' (will extract sequences with AGAT accounting for CDS phase)
 
+## TO-DO
+# - Dealing with duplicated genes :
+#   Replace concatAndRmRepeatGenes.py with a simple cat (normally there should not be duplicated genes)
+#   Instead only check for duplicated/overlaping genes and print a warning (see check_gene_overlaps.py that does not rely on gene IDs to detect duplicates/overlaps)
+#   Write a separate script to remove duplicated genes if the issue arises
+
 ## ----------------------------------- MAIN ------------------------------------------------ ##
 
 main() {
-
+  
   # importing variables and functions
   CONFIG_FILE=$1
+
+  if [[ "${2:-}" == "--debug" ]]; then
+    echo "Debug mode"
+    set -xv
+  fi
 
   SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
   source ${SCRIPT_DIR}/lib_LRRome.sh
 
   chmod 755 $CONFIG_FILE && source $CONFIG_FILE
-  require_variables GMT_DIR GMT_SIF LRRPROFILER_SIF GFF_LIST INITIAL_LRROME INITIAL_LRR_GFF EXP_REF_GENOME EXP_PREFIX INIT_PREFIX SEQ_TYPE
+  check_variables_exist GMT_DIR GMT_SIF LRRPROFILER_SIF GFF_LIST INITIAL_LRROME INITIAL_LRR_GFF EXP_REF_GENOME EXP_PREFIX INIT_PREFIX SEQ_TYPE
+  check_files_exist "$GMT_SIF" "$LRRPROFILER_SIF" "$GFF_LIST" "$INITIAL_LRR_GFF" "$EXP_REF_GENOME"
+  if [[ -n "$EXTRA_GFF_LIST" ]] ; then
+    check_files_exist "$EXTRA_GFF_LIST"
+  fi
+  check_folders_exist "$GMT_DIR" "$INITIAL_LRROME"
 
   CONCAT_AND_RM_REPEAT_GENES=${SCRIPT_DIR}/concatAndRmRepeatGenes.py
 
+
   # building new LRRome
-  exp_LRRome_out_dir=01_build_exp_LRRome
-  clean_gff $GFF_LIST $EXP_PREFIX ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
 
-  build_exp_LRRome_multiGFF $EXP_PREFIX $EXP_REF_GENOME ${exp_LRRome_out_dir}/clean_gff.list $GMT_SIF $SEQ_TYPE ${CONCAT_AND_RM_REPEAT_GENES} ${LRRPROFILER_SIF} ${GMT_DIR}/SCRIPT $exp_LRRome_out_dir
-  exp_LRRome=$(realpath ${exp_LRRome_out_dir}/LRRome)
-  exp_LRRome_gff=$(realpath ${exp_LRRome_out_dir}/LRR_ANNOT/${EXP_PREFIX}_LRR.gff)
+  clean_gff_out_dir=01_cleaned_gff
+  clean_gff_for_LRRprofiler $EXP_PREFIX ${GMT_DIR} $GFF_LIST ${clean_gff_out_dir} $EXTRA_GFF_LIST
+  clean_gff_list=${clean_gff_out_dir}/clean_gff.list
+  extra_gene_list=""
+  if [[ -n "${EXTRA_GFF_LIST}" ]] ; then extra_gene_list=${clean_gff_out_dir}/extra_gene_IDs.list ; fi
 
-  final_LRRome_out_dir=02_LRRome
+  exp_LRRome_out_dir=02_build_exp_LRRome
+  build_exp_LRRome_multiGFF $EXP_PREFIX $EXP_REF_GENOME ${clean_gff_list} $GMT_SIF $SEQ_TYPE ${CONCAT_AND_RM_REPEAT_GENES} ${LRRPROFILER_SIF} ${GMT_DIR} $exp_LRRome_out_dir ${extra_gene_list}
+  exp_LRRome=$(realpath ${exp_LRRome_out_dir}/03_LRRome)
+  exp_LRRome_gff=$(realpath ${exp_LRRome_out_dir}/02_LRR_gff/${EXP_PREFIX}_LRR.gff)
+  
+  final_LRRome_out_dir=03_LRRome
   merge_LRRome $INITIAL_LRROME $exp_LRRome $final_LRRome_out_dir
-
-  final_gff_out_dir=03_final_GFF
+  
+  final_gff_out_dir=04_final_GFF
   concat_gff $INITIAL_LRR_GFF $exp_LRRome_gff ${final_gff_out_dir} ${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff
   final_gff=${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_LRR.gff
 
@@ -50,7 +73,7 @@ main() {
 
   compute_gene_stats ${final_gff} ${final_gff_out_dir}/${INIT_PREFIX}_${EXP_PREFIX}_gene_stats.tsv
 
-  write_infos $INITIAL_LRROME $GFF_LIST $INIT_PREFIX $EXP_PREFIX $exp_LRRome_out_dir $final_LRRome_out_dir $final_gff_out_dir
+  write_infos $INITIAL_LRROME $GFF_LIST $INIT_PREFIX $EXP_PREFIX $exp_LRRome_out_dir $final_LRRome_out_dir $final_gff_out_dir ${extra_gene_list}
 }
 
 main "$@"
