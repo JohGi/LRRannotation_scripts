@@ -1,0 +1,11 @@
+GMT_DIR=/home/girodollej/replicated/2024_LRR/03_scripts/LRRtransfer/GeneModelTransfer
+GMT_SIF=/storage/replicated/cirad/projects/GE2POP/2023_LRR/LRRtransfer_image/v2_20250407/LRRtransfer.sif
+LRRPROFILER_SIF=/storage/replicated/cirad/projects/GE2POP/2023_LRR/USEFUL/LRRprofiler.sif
+GFF_LIST=/lustre/girodollej/2024_LRR/02_results/19_SVEVO_PAPER_v2_2025_06/01_build_LRRome/01_LRRome/new_gff_list_order.txt
+EXTRA_GFF_LIST=/lustre/girodollej/2024_LRR/02_results/19_SVEVO_PAPER_v2_2025_06/01_build_LRRome/01_LRRome/extra_gff_list_order.txt
+INITIAL_LRROME=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3_LRR_ANNOT_2025_01/01_INPUT/03_LRRome
+INITIAL_LRR_GFF=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3_LRR_ANNOT_2025_01/01_INPUT/04_final_GFF/IRGSP_DWSvevo3January_LRR.gff
+EXP_REF_GENOME=/storage/replicated/cirad/projects/GE2POP/2023_LRR/SVEVO3/Data_Package_01_12_22/DW_Svevo4.fasta
+EXP_PREFIX=DWSvevo3June
+INIT_PREFIX=IRGSP_DWSvevo3January
+SEQ_TYPE=FSprot
