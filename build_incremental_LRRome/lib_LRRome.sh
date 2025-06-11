@@ -329,6 +329,7 @@ concat_gff() {
 
   mkdir -p ${final_gff_out_dir}
   cp $initial_gff ${final_gff_out_dir}/${final_gff_name}
+  chmod u+w ${final_gff_out_dir}/${final_gff_name}
   cat ${exp_LRRome_gff} >>${final_gff_out_dir}/${final_gff_name}
   rmCR ${final_gff_out_dir}/${final_gff_name}
 
@@ -415,12 +416,6 @@ write_infos() {
   local LRRprofiler_dir=${build_exp_LRRome_dir}/01_LRRprofiler
   local LRR_gff_dir=${build_exp_LRRome_dir}/02_LRR_gff
   local exp_LRRome_dir=${build_exp_LRRome_dir}/03_LRRome
-
-  # if [[ -n "$extra_gene_list" ]] ; then
-  #   local non_LRR_list=${LRRprofiler_dir}/not_LRR_genes_with_extra_genes.list
-  # else
-  #   local non_LRR_list=${LRRprofiler_dir}/not_LRR_genes.list
-  # fi
 
   date >LRRome_incremental_build_infos.txt
 
