@@ -1,0 +1,21 @@
+Chromosome,Cluster name,Reference locus,Alternative locus,Comparison matches,Comparison mismatches,Identity score (%),Reference start,Reference end,Alternative start,Alternative end,Reference mRNA,Alternative mRNA,Exon_intron (EI) non-correspondance zones,Reading frame (RF) non-correspondance zones,Exon_Intron (EI) mismatches,Reading Frame (RF) mismatches,reference mRNA number,alternative mRNA number
+chrB_direct,cluster 0,geneA_B,geneA_pred_B,72,9,88.9,100,200,100,200,transcriptA_B,transcriptA_pred_B,[151//160] ,,9,0,1,1
+chrB_direct,cluster 2,geneB_B,geneB1_pred_B,21,60,25.9,300,400,300,340,transcriptB_B,transcriptB1_pred_B,[331//391] ,,60,0,1,1
+chrB_direct,cluster 2,~,geneB2_pred_B,_,_,_,_,_,350,400,_,transcriptB2_pred_B,_,_,_,_,_,1
+chrB_direct,cluster 5,geneC_B,geneCF_pred_B,61,100,37.9,500,580,500,680,transcriptC_B,transcriptCF_pred_B,[571//671] ,,100,0,1,1
+chrB_direct,cluster 5,geneD_B,~,_,_,_,600,680,_,_,transcriptD_B,_,_,_,_,_,1,_
+chrB_direct,cluster 8,geneE_B,geneX1_B,11,20,35.5,800,830,800,850,transcriptE_B,transcriptX1_B,[821//841] ,,20,0,1,1
+chrB_direct,cluster 10,geneF_B,geneX2_B,11,20,35.5,860,890,860,910,transcriptF_B,transcriptX2_B,[881//901] ,,20,0,1,1
+chrB_direct,cluster 12,geneG_B,geneGH1_pred_B,11,40,21.6,1000,1100,1030,1120,transcriptG_B,transcriptGH1_B,[1010//1040] [1051//1061] ,,40,0,1,1
+chrB_direct,cluster 12,geneH_B,geneGH2_pred_B,0,71,0.0,1080,1150,1100,1170,transcriptH_B,transcriptGH2_B,[1090//1110] [1141//1161] ,[1110//1140] ,40,31,1,1
+chr1_direct,cluster 0,geneA,geneA_pred,72,9,88.9,100,200,100,200,transcriptA,transcriptA_pred,[151//160] ,,9,0,1,1
+chr1_direct,cluster 2,geneB,geneB1_pred,21,60,25.9,300,400,300,340,transcriptB,transcriptB1_pred,[331//391] ,,60,0,1,1
+chr1_direct,cluster 2,~,geneB2_pred,_,_,_,_,_,350,400,_,transcriptB2_pred,_,_,_,_,_,1
+chr1_direct,cluster 5,geneC,geneCF_pred,61,100,37.9,500,580,500,680,transcriptC,transcriptCF_pred,[571//671] ,,100,0,1,1
+chr1_direct,cluster 5,geneD,~,_,_,_,600,680,_,_,transcriptD,_,_,_,_,_,1,_
+chr1_direct,cluster 8,geneE,geneX1,11,20,35.5,800,830,800,850,transcriptE,transcriptX1,[821//841] ,,20,0,1,1
+chr1_direct,cluster 10,geneF,geneX2,11,20,35.5,860,890,860,910,transcriptF,transcriptX2,[881//901] ,,20,0,1,1
+chr1_direct,cluster 12,geneG,geneGH1_pred,11,40,21.6,1000,1100,1030,1120,transcriptG,transcriptGH1,[1010//1040] [1051//1061] ,,40,0,1,1
+chr1_direct,cluster 12,geneH,geneGH2_pred,0,71,0.0,1080,1150,1100,1170,transcriptH,transcriptGH2,[1090//1110] [1141//1161] ,[1110//1140] ,40,31,1,1
+chr1_direct,cluster 16,geneZ_disappear,~,_,_,0.0,1200,1250,_,_,_,_,_,_,_,_,1,_
+chr1_direct,cluster 17,~,geneY_appear,_,_,0.0,_,_,1300,1350,_,_,_,_,_,_,_,1
