@@ -1,4 +1,6 @@
 pandas
 matplotlib
 numpy
-
+gffutils
+intervaltree
+attrs
