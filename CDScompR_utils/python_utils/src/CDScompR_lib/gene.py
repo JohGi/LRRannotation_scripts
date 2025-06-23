@@ -19,13 +19,13 @@ class Gene:
         """
         Update this Gene with best hit ID and identity score from a CDScompR score dataframe.
         """
-        self_id_col = 2 if is_ref else 3
-        best_hit_id_col = 3 if is_ref else 2
+        self_id_col = "ref_id" if is_ref else "alt_id"
+        best_hit_id_col = "alt_id" if is_ref else "ref_id"
 
-        score_row = score_df[score_df.iloc[:, self_id_col] == self.id]
+        score_row = score_df[score_df[self_id_col] == self.id]
         if not score_row.empty:
-            self.best_hit_id = score_row.iloc[0, best_hit_id_col]
-            score_value = score_row.iloc[0, 6]
+            self.best_hit_id = score_row.iloc[0][best_hit_id_col]
+            score_value = score_row.iloc[0]["identity_score"]
             self.identity_score = float(score_value) if pd.notna(score_value) else None
 
     @classmethod

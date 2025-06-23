@@ -9,7 +9,6 @@ set -euo pipefail
 # GMT_SIF: path to GeneModelTransfer .sif
 # PYTHON_LIBS_SIF: path to python libraries .sif (compare_annots.py dependencies)
 # CDSCOMPR_DIR: path to CDScompR cloned repo
-# CDSCOMPR_UTILS_DIR: path to CDScompR utils directory (https://github.com/JohGi/LRRannotation_scripts/tree/main/CDScompR_utils/python_utils)
 
 module load singularity/3.6.3
 module load python/packages/3.8.2
@@ -58,9 +57,9 @@ import_and_check_variables() {
   check_files_exist "$CONFIG_FILE"
   source "${CONFIG_FILE}"
 
-  check_variables_exist GMT_DIR GMT_SIF PYTHON_LIBS_SIF CDSCOMPR_DIR REF_GFF ALT_GFF OUTPUT_SUFFIX OUT_DIR #CDSCOMPR_UTILS_DIR
+  check_variables_exist GMT_DIR GMT_SIF PYTHON_LIBS_SIF CDSCOMPR_DIR REF_GFF ALT_GFF OUTPUT_SUFFIX OUT_DIR
   check_files_exist "$GMT_SIF" "$PYTHON_LIBS_SIF" "$REF_GFF" "$ALT_GFF"
-  check_folders_exist "$GMT_DIR" "$CDSCOMPR_DIR" #"$CDSCOMPR_UTILS_DIR"
+  check_folders_exist "$GMT_DIR" "$CDSCOMPR_DIR"
 
   SCRIPT_DIR="$(dirname "$(realpath "$0")")"
   CDSCOMPR_UTILS_DIR=$(realpath ${SCRIPT_DIR}/../..)
@@ -77,7 +76,7 @@ sort_gffs() {
   singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$ref_gff" -o "${ref_sorted}"
   local alt_sorted="${out_dir}/01_sorted_input_gffs/alt_"$(basename "$alt_gff" .gff)"_sorted.gff"
   singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$alt_gff" -o "${alt_sorted}"
-  echo $(realpath --relative-to="$PWD" "$ref_sorted" "$alt_sorted")
+  echo $(realpath "$ref_sorted" "$alt_sorted")
 }
 
 run_CDScompR() {
@@ -89,7 +88,7 @@ run_CDScompR() {
   cd "${out_dir}" && python3 ${CDSCOMPR_DIR}/CDScompR.py --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" >"${out_dir}/CDScompR.log" 2>&1 && cd - >/dev/null
   mv ${out_dir}/results ${out_dir}/02_CDScompR_results
   awk -F ',' '{if (NR > 1 && $3 != "~" && $4 != "~"){print $7}}' ${out_dir}/02_CDScompR_results/*.csv | sort -n | uniq -c >${out_dir}/02_CDScompR_results/${suffix}_overlaping_genes_score_distr.txt
-  echo $(realpath --relative-to="$PWD" "${out_dir}/02_CDScompR_results/*.csv")
+  echo $(realpath "${out_dir}/02_CDScompR_results/*.csv")
 }
 
 main() {

@@ -12,7 +12,7 @@ sys.path.insert(
 )
 from CDScompR_lib.gene import Gene
 from CDScompR_lib.overlap_group import OverlapGroup
-from CDScompR_lib.comparison_utils import add_identity_scores, summarize_overlaps
+from CDScompR_lib.comparison_utils import add_identity_scores, summarize_overlaps, load_score_file
 from CDScompR_lib.gff_utils import build_db
 
 def main():
@@ -34,8 +34,7 @@ def main():
 
 
     if args.cdscompr_csv:
-        print("Loading score CSV...")
-        score_df = pd.read_csv(args.cdscompr_csv, na_values=["_", "~"])
+        score_df = load_score_file(args.cdscompr_csv)
         add_identity_scores(ref_genes, score_df, is_ref=True)
         add_identity_scores(pred_genes, score_df, is_ref=False)
 
