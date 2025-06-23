@@ -85,11 +85,48 @@ run_CDScompR() {
   local suffix=$3
   local out_dir=$(realpath $4)
 
-  cd "${out_dir}" && python3 ${CDSCOMPR_DIR}/CDScompR.py --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" >"${out_dir}/CDScompR.log" 2>&1 && cd - >/dev/null
+  cd "${out_dir}" 
+  (
+    cd "${out_dir}" || exit 1
+    python3 "${CDSCOMPR_DIR}/CDScompR.py" \
+        --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" \
+        >CDScompR.log 2>&1
+  ) || {
+    echo "Error: CDScompR.py failed. Check ${out_dir}/CDScompR.log for details." >&2
+    exit 1
+  }
+  # python3 ${CDSCOMPR_DIR}/CDScompR.py --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" >"${out_dir}/CDScompR.log" 2>&1
+  cd - >/dev/null
   mv ${out_dir}/results ${out_dir}/02_CDScompR_results
   awk -F ',' '{if (NR > 1 && $3 != "~" && $4 != "~"){print $7}}' ${out_dir}/02_CDScompR_results/*.csv | sort -n | uniq -c >${out_dir}/02_CDScompR_results/${suffix}_overlaping_genes_score_distr.txt
   echo $(realpath "${out_dir}/02_CDScompR_results/*.csv")
 }
+
+summarize_overlap_types() {
+    local input="$1"
+    local output="$2"
+
+    cut -f11 "$input" | tail -n +2 | sort | uniq -c | awk '{print $2":\t"$1}' >"$output"
+
+    local match_mean_score
+    match_mean_score=$(awk -F'\t' '
+    BEGIN { sum=0; count=0 }
+    $11 == "match" {
+        gsub(/[\[\]'\'' ]/, "", $10);
+        split($10, parts, ":");
+        sum += parts[2];
+        count++;
+    }
+    END {
+        if (count > 0)
+            printf "(mean id score: %.2f%%)", sum/count;
+    }' "$input")
+
+    if [[ -n "$match_mean_score" ]]; then
+        sed -i "/^match:/ s/$/ $match_mean_score/" "$output"
+    fi
+}
+
 
 main() {
   import_and_check_variables "$@"
@@ -103,7 +140,7 @@ main() {
   mkdir -p "${OUT_DIR}/03_overlaps"
   singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
 
-  cut -f11 "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" | tail -n +2 | sort | uniq -c | awk '{print $2":\t"$1}' >"${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_summary.tsv"
+  summarize_overlap_types "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_summary.tsv"
 }
 
 main "$@"
