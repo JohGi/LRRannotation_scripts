@@ -1,13 +1,14 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from attrs import define, field
 from intervaltree import Interval, IntervalTree
 from collections import defaultdict
 from .gene import Gene
 
+
 @define
 class OverlapGroup:
-    ref_genes: List['Gene'] = field(factory=list)
-    pred_genes: List['Gene'] = field(factory=list)
+    ref_genes: List["Gene"] = field(factory=list)
+    pred_genes: List["Gene"] = field(factory=list)
 
     def get_type(self) -> str:
         """
@@ -28,7 +29,7 @@ class OverlapGroup:
             return "fusion"
         else:
             return "complex"
-    
+
     def summarize(self) -> Dict:
         """
         Build a dictionary summary of the group, including gene IDs, coordinates,
@@ -43,33 +44,36 @@ class OverlapGroup:
             "pred_cds_lengths": [g.protein.cds_length() for g in self.pred_genes],
             "ref_cds_counts": [g.protein.cds_count() for g in self.ref_genes],
             "pred_cds_counts": [g.protein.cds_count() for g in self.pred_genes],
-            "ref_best_hits": [f"{g.best_hit_id}: {g.identity_score}" for g in self.ref_genes],
-            "pred_best_hits": [f"{g.best_hit_id}: {g.identity_score}" for g in self.pred_genes],
-            "type": self.get_type()
+            "ref_best_hits": [
+                f"{g.best_hit_id}: {g.identity_score}" for g in self.ref_genes
+            ],
+            "pred_best_hits": [
+                f"{g.best_hit_id}: {g.identity_score}" for g in self.pred_genes
+            ],
+            "type": self.get_type(),
         }
 
     @staticmethod
-    def _group_by_chrom(genelist: List['Gene']) -> Dict[str, List['Gene']]:
+    def _group_by_chrom_and_strand(genes: List["Gene"],) -> Dict[Tuple[str, str], List["Gene"]]:
         """
-        Group a list of Gene objects by chromosome.
-    
-        Returns:
-            A dict mapping chromosome IDs to lists of genes.
+        Group genes by (chromosome, strand).
         """
-        chrom_dict = defaultdict(list)
-        for gene in genelist:
-            chrom_dict[gene.protein.feature.seqid].append(gene)
-        return chrom_dict
+        chrom_strand_dict = defaultdict(list)
+        for gene in genes:
+            chrom = gene.protein.feature.seqid
+            strand = gene.protein.feature.strand
+            chrom_strand_dict[(chrom, strand)].append(gene)
+        return chrom_strand_dict
 
     @staticmethod
     def _find_root(id: str, parents: Dict[str, str]) -> str:
         """
         Find the root of a node in a union-find structure, with path compression.
-        
+
         Parameters:
             id: Gene unique identifier.
             parents: Disjoint-set forest mapping.
-        
+
         Returns:
             The root ID for the given node.
         """
@@ -84,7 +88,7 @@ class OverlapGroup:
     def _unite_roots(id1: str, id2: str, parents: Dict[str, str]) -> None:
         """
         Merge two disjoint sets in a union-find structure.
-        
+
         Parameters:
             id1, id2: Gene identifiers to merge.
             parents: Disjoint-set forest mapping.
@@ -95,7 +99,7 @@ class OverlapGroup:
             parents[root2] = root1
 
     @staticmethod
-    def _build_tree(ref_genes: List['Gene'], pred_genes: List['Gene']) -> IntervalTree:
+    def _build_tree(ref_genes: List["Gene"], pred_genes: List["Gene"]) -> IntervalTree:
         """
         Create an interval tree from reference and predicted genes.
         """
@@ -109,7 +113,7 @@ class OverlapGroup:
     def _build_parents(tree: IntervalTree) -> Dict[str, str]:
         """
         Construct union-find structure to track connected overlapping genes.
-        
+
         Returns:
             A mapping of each gene ID to its root in the disjoint-set forest.
         """
@@ -118,12 +122,16 @@ class OverlapGroup:
         for interval in tree:
             for overlap in tree.overlap(interval.begin, interval.end):
                 if interval.data.uid != overlap.data.uid:
-                    OverlapGroup._unite_roots(interval.data.uid, overlap.data.uid, parents)
+                    OverlapGroup._unite_roots(
+                        interval.data.uid, overlap.data.uid, parents
+                    )
 
         return parents
 
     @staticmethod
-    def _build_groups_from_parents(tree: IntervalTree, parents: Dict[str, str]) -> List['OverlapGroup']:
+    def _build_groups_from_parents(
+        tree: IntervalTree, parents: Dict[str, str]
+    ) -> List["OverlapGroup"]:
         """
         Build a list of OverlapGroup objects from connected genes in the parents disjoint-set structure.
         """
@@ -138,7 +146,7 @@ class OverlapGroup:
         return list(groups.values())
 
     @staticmethod
-    def _build_groups(tree: IntervalTree) -> List['OverlapGroup']:
+    def _build_groups(tree: IntervalTree) -> List["OverlapGroup"]:
         """
         Build a list of OverlapGroup objects from overlapping genes in the interval tree.
         """
@@ -146,26 +154,26 @@ class OverlapGroup:
         return OverlapGroup._build_groups_from_parents(tree, parents)
 
     @staticmethod
-    def overlap_groups_from_genes(ref_genes: List['Gene'], pred_genes: List['Gene']) -> List['OverlapGroup']:
+    def overlap_groups_from_genes(ref_genes: List["Gene"], pred_genes: List["Gene"]) -> List["OverlapGroup"]:
         """
         Identify groups of overlapping genes between two annotations.
-        
+
         Parameters:
             ref_genes: List of reference Gene objects.
             pred_genes: List of predicted Gene objects.
-        
+
         Returns:
             A list of OverlapGroup instances.
         """
-        grouped_ref_genes = OverlapGroup._group_by_chrom(ref_genes)
-        grouped_pred_genes = OverlapGroup._group_by_chrom(pred_genes)
+        grouped_ref_genes = OverlapGroup._group_by_chrom_and_strand(ref_genes)
+        grouped_pred_genes = OverlapGroup._group_by_chrom_and_strand(pred_genes)
         all_groups = []
 
-        for chrom in set(grouped_ref_genes.keys()) | set(grouped_pred_genes.keys()):
-            interval_tree = OverlapGroup._build_tree(grouped_ref_genes.get(chrom, []),
-                                            grouped_pred_genes.get(chrom, []))
+        for chrom_strand in set(grouped_ref_genes.keys()) | set(grouped_pred_genes.keys()):
+            interval_tree = OverlapGroup._build_tree(
+                grouped_ref_genes.get(chrom_strand, []), grouped_pred_genes.get(chrom_strand, [])
+            )
             chrom_groups = OverlapGroup._build_groups(interval_tree)
             all_groups.extend(chrom_groups)
 
         return all_groups
-

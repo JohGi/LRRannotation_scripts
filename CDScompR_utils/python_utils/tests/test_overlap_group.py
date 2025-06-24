@@ -8,13 +8,14 @@ from CDScompR_lib.overlap_group import OverlapGroup
 
 
 class DummyFeature:
-    def __init__(self, seqid: str):
+    def __init__(self, seqid: str, strand: str):
         self.seqid = seqid
+        self.strand = strand
 
 
 class DummyProtein:
-    def __init__(self, seqid: str):
-        self.feature = DummyFeature(seqid)
+    def __init__(self, seqid: str, strand: str):
+        self.feature = DummyFeature(seqid, strand)
 
     def cds_length(self) -> int:
         return 100
@@ -23,12 +24,12 @@ class DummyProtein:
         return 2
 
 
-def make_gene(id: str, start: int, end: int, is_ref: bool, seqid: str = "chr") -> Gene:
+def make_gene(id: str, start: int, end: int, is_ref: bool, seqid: str = "chr", strand: str = "+") -> Gene:
     return Gene(
         id=id,
         start=start,
         end=end,
-        protein=DummyProtein(seqid),
+        protein=DummyProtein(seqid, strand),
         is_ref=is_ref,
         uid=f"{'ref' if is_ref else 'pred'}:{id}"
     )
@@ -66,7 +67,13 @@ def make_gene(id: str, start: int, end: int, is_ref: bool, seqid: str = "chr") -
     # Genes on different chromosomes → must be in separate groups
     ([make_gene("ref6", 100, 200, True, seqid="chr1")],
      [make_gene("pred6", 150, 250, False, seqid="chr2")],
-     2, ["disappearance", "appearance"])
+     2, ["disappearance", "appearance"]),
+
+     # Genes on same chromosome but different strands → must be in separate groups
+    ([make_gene("ref7", 100, 200, True, seqid="chr1", strand="+")],
+     [make_gene("pred7", 150, 250, False, seqid="chr1", strand="-")],
+     2, ["disappearance", "appearance"]),
+
 ])
 def test_overlap_group_types(ref_genes, pred_genes, expected_nb_groups, expected_types):
     groups = OverlapGroup.overlap_groups_from_genes(ref_genes, pred_genes)
