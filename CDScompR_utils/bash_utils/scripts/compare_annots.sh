@@ -120,10 +120,26 @@ summarize_overlap_types() {
             printf "(mean id score: %.2f%%)", sum/count;
     }' "$input")
 
+    read -r nb_match_with_overlap nb_match_without_overlap < <(
+        awk -F'\t' '
+        BEGIN { w = 0; wo = 0 }
+        $11 == "match" {
+            gsub(/[\[\]'\'' ]/, "", $10);
+            if ($10 ~ /^<NA>:0\.0$/) {
+                wo++;
+            } else if ($10 ~ /:0\.0$/) {
+                w++;
+            }
+        }
+        END { print w, wo }
+        ' "$input"
+    )
+
     if [[ -n "$match_mean_score" ]]; then
-        sed -i "/^match:/ s/$/ $match_mean_score/" "$output"
+        sed -i "/^match:/ s/$/ $match_mean_score\n--- including ${nb_match_with_overlap} match(es) with a 0.00% score with overlapping CDS\n--- including ${nb_match_without_overlap} match(es) with a 0.00% score with no overlapping CDS (not detected by CDScompR)/" "$output"
     fi
 }
+
 
 
 main() {
