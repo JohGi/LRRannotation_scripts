@@ -3,6 +3,7 @@ from typing import List, Optional
 from .gene import Gene
 from .overlap_group import OverlapGroup
 
+
 def load_score_file(csv_path: str) -> pd.DataFrame:
     """
     Load and preprocess a CDScompR CSV score file.
@@ -10,15 +11,11 @@ def load_score_file(csv_path: str) -> pd.DataFrame:
     """
     print("Loading score CSV...")
 
-    cols_needed = [
-        "Reference locus",
-        "Alternative locus",
-        "Identity score (%)"
-    ]
+    cols_needed = ["Reference locus", "Alternative locus", "Identity score (%)"]
     dtypes = {
         "Reference locus": "string",
         "Alternative locus": "string",
-        "Identity score (%)": "float"
+        "Identity score (%)": "float",
     }
 
     score_df = pd.read_csv(
@@ -26,18 +23,25 @@ def load_score_file(csv_path: str) -> pd.DataFrame:
         usecols=cols_needed,
         na_values=["_", "~"],
         dtype=dtypes,
-        low_memory=False
+        # low_memory=False,
+        engine="pyarrow",
     )
 
-    score_df.rename(columns={
-        "Reference locus": "ref_id",
-        "Alternative locus": "alt_id",
-        "Identity score (%)": "identity_score"
-    }, inplace=True)
+    score_df.rename(
+        columns={
+            "Reference locus": "ref_id",
+            "Alternative locus": "alt_id",
+            "Identity score (%)": "identity_score",
+        },
+        inplace=True,
+    )
 
     return score_df
 
-def add_identity_scores(genes: List[Gene], score_df: pd.DataFrame, is_ref: bool) -> None:
+
+def add_identity_scores(
+    genes: List[Gene], score_df: pd.DataFrame, is_ref: bool
+) -> None:
     """
     Update all Gene objects in the list with best hit ID and identity score.
     """
@@ -45,7 +49,9 @@ def add_identity_scores(genes: List[Gene], score_df: pd.DataFrame, is_ref: bool)
         gene.set_identity_scores(score_df, is_ref)
 
 
-def summarize_overlaps(groups: List[OverlapGroup], output_path: Optional[str] = None) -> None:
+def summarize_overlaps(
+    groups: List[OverlapGroup], output_path: Optional[str] = None
+) -> None:
     """
     Summarize a list of OverlapGroups into a DataFrame and write it to a TSV file or print it.
 

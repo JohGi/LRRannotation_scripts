@@ -7,11 +7,10 @@ set -euo pipefail
 ## With CA_config.sh setting-up the following variables (var=value, one variable per ligne):
 # GMT_DIR: path to GeneModelTransfer cloned repo
 # GMT_SIF: path to GeneModelTransfer .sif
-# PYTHON_LIBS_SIF: path to python libraries .sif (compare_annots.py dependencies)
+# PYTHON_LIBS_SIF: path to python libraries .sif (compare_annots.py and CDScompR dependencies)
 # CDSCOMPR_DIR: path to CDScompR cloned repo
 
 module load singularity/3.6.3
-module load python/packages/3.8.2
 
 ## Functions
 check_variables_exist() {
@@ -88,14 +87,13 @@ run_CDScompR() {
   cd "${out_dir}" 
   (
     cd "${out_dir}" || exit 1
-    python3 "${CDSCOMPR_DIR}/CDScompR.py" \
+    singularity exec "$PYTHON_LIBS_SIF" python3 "${CDSCOMPR_DIR}/CDScompR.py" \
         --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" \
         >CDScompR.log 2>&1
   ) || {
     echo "Error: CDScompR.py failed. Check ${out_dir}/CDScompR.log for details." >&2
     exit 1
   }
-  # python3 ${CDSCOMPR_DIR}/CDScompR.py --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" >"${out_dir}/CDScompR.log" 2>&1
   cd - >/dev/null
   mv ${out_dir}/results ${out_dir}/02_CDScompR_results
   awk -F ',' '{if (NR > 1 && $3 != "~" && $4 != "~"){print $7}}' ${out_dir}/02_CDScompR_results/*.csv | sort -n | uniq -c >${out_dir}/02_CDScompR_results/${suffix}_overlaping_genes_score_distr.txt

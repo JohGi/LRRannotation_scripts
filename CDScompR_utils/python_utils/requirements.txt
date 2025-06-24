@@ -4,3 +4,4 @@ numpy
 gffutils
 intervaltree
 attrs
+pyarrow
