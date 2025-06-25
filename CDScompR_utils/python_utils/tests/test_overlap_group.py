@@ -24,11 +24,11 @@ class DummyProtein:
         return 2
 
 
-def make_gene(id: str, start: int, end: int, is_ref: bool, seqid: str = "chr", strand: str = "+") -> Gene:
+def make_gene(id: str, span_start: int, span_end: int, is_ref: bool, seqid: str = "chr", strand: str = "+") -> Gene:
     return Gene(
         id=id,
-        start=start,
-        end=end,
+        span_start=span_start,
+        span_end=span_end,
         protein=DummyProtein(seqid, strand),
         is_ref=is_ref,
         uid=f"{'ref' if is_ref else 'pred'}:{id}"

@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ### LAUNCHING:
-# ./compare_annots.sh <CA_config.sh> <ref.gff> <alt.gff> <output_suffix> <path/to/output_dir> [--debug]
+# ./compare_annots.sh <CA_config.sh> <ref.gff> <alt.gff> <span_type> <output_suffix> <path/to/output_dir> [--debug]
+# span_type: what feature should be used to determine the coordinates used to detect overlaps in compare_annots.py ("gene", "mRNA" or "CDS")
 
 ## With CA_config.sh setting-up the following variables (var=value, one variable per ligne):
 # GMT_DIR: path to GeneModelTransfer cloned repo
@@ -44,10 +45,11 @@ import_and_check_variables() {
   CONFIG_FILE=$(realpath $1)
   REF_GFF=$(realpath $2)
   ALT_GFF=$(realpath $3)
-  OUTPUT_SUFFIX=$4
-  OUT_DIR=$5
+  SPAN_TYPE=$4
+  OUTPUT_SUFFIX=$5
+  OUT_DIR=$6
 
-  if [[ "${6:-}" == "--debug" ]]; then
+  if [[ "${7:-}" == "--debug" ]]; then
     echo "Debug mode"
     set -xv
   fi
@@ -56,7 +58,7 @@ import_and_check_variables() {
   check_files_exist "$CONFIG_FILE"
   source "${CONFIG_FILE}"
 
-  check_variables_exist GMT_DIR GMT_SIF PYTHON_LIBS_SIF CDSCOMPR_DIR REF_GFF ALT_GFF OUTPUT_SUFFIX OUT_DIR
+  check_variables_exist GMT_DIR GMT_SIF PYTHON_LIBS_SIF CDSCOMPR_DIR REF_GFF ALT_GFF OUTPUT_SUFFIX OUT_DIR SPAN_TYPE
   check_files_exist "$GMT_SIF" "$PYTHON_LIBS_SIF" "$REF_GFF" "$ALT_GFF"
   check_folders_exist "$GMT_DIR" "$CDSCOMPR_DIR"
 
@@ -104,14 +106,14 @@ summarize_overlap_types() {
     local input="$1"
     local output="$2"
 
-    cut -f11 "$input" | tail -n +2 | sort | uniq -c | awk '{print $2":\t"$1}' >"$output"
+    cut -f12 "$input" | tail -n +2 | sort | uniq -c | awk '{print $2":\t"$1}' >"$output"
 
     local match_mean_score
     match_mean_score=$(awk -F'\t' '
     BEGIN { sum=0; count=0 }
-    $11 == "match" {
-        gsub(/[\[\]'\'' ]/, "", $10);
-        split($10, parts, ":");
+    $12 == "match" {
+        gsub(/[\[\]'\'' ]/, "", $11);
+        split($11, parts, ":");
         sum += parts[2];
         count++;
     }
@@ -123,11 +125,11 @@ summarize_overlap_types() {
     read -r nb_match_with_overlap nb_match_without_overlap < <(
         awk -F'\t' '
         BEGIN { w = 0; wo = 0 }
-        $11 == "match" {
-            gsub(/[\[\]'\'' ]/, "", $10);
-            if ($10 ~ /^<NA>:0\.0$/) {
+        $12 == "match" {
+            gsub(/[\[\]'\'' ]/, "", $11);
+            if ($11 ~ /^<NA>:0\.0$/) {
                 wo++;
-            } else if ($10 ~ /:0\.0$/) {
+            } else if ($11 ~ /:0\.0$/) {
                 w++;
             }
         }
@@ -152,7 +154,7 @@ main() {
   CDScompR_output_csv=$(run_CDScompR "${sorted_ref_gff}" "${sorted_alt_gff}" "${OUTPUT_SUFFIX}" "${OUT_DIR}")
 
   mkdir -p "${OUT_DIR}/03_overlaps"
-  singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
+  singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
 
   summarize_overlap_types "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_summary.tsv"
 }

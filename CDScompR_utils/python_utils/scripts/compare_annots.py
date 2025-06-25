@@ -20,6 +20,8 @@ def main():
     parser.add_argument("--ref_gff", help="Reference (expert) GFF file")
     parser.add_argument("--pred_gff", help="Predicted GFF file")
     parser.add_argument("--cdscompr_csv", help="CDScompR csv output file")
+    parser.add_argument("--span_type", choices=["gene", "mRNA", "CDS"], default="gene",
+                        help="Feature span to use for overlap detection (default: gene)")
     parser.add_argument("-o", "--output", help="Output TSV file")
 
     args = parser.parse_args()
@@ -29,8 +31,8 @@ def main():
     pred_genes_db = build_db(args.pred_gff)
 
     print("Parsing genes...")
-    ref_genes = [Gene.from_gff(ref_genes_db, g, is_ref=True) for g in ref_genes_db.features_of_type("gene")]
-    pred_genes = [Gene.from_gff(pred_genes_db, g, is_ref=False) for g in pred_genes_db.features_of_type("gene")]
+    ref_genes = [Gene.from_gff(ref_genes_db, g, is_ref=True, span_type=args.span_type) for g in ref_genes_db.features_of_type("gene")]
+    pred_genes = [Gene.from_gff(pred_genes_db, g, is_ref=False, span_type=args.span_type) for g in pred_genes_db.features_of_type("gene")]
 
 
     if args.cdscompr_csv:
@@ -42,7 +44,7 @@ def main():
     overlap_groups = OverlapGroup.overlap_groups_from_genes(ref_genes, pred_genes)
     print(f"Found {len(overlap_groups)} overlapping groups.")
 
-    summarize_overlaps(overlap_groups, args.output)
+    summarize_overlaps(overlap_groups, args.span_type, args.output)
 
 if __name__ == "__main__":
     main()

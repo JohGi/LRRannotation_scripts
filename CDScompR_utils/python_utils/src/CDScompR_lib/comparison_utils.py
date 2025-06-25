@@ -39,9 +39,7 @@ def load_score_file(csv_path: str) -> pd.DataFrame:
     return score_df
 
 
-def add_identity_scores(
-    genes: List[Gene], score_df: pd.DataFrame, is_ref: bool
-) -> None:
+def add_identity_scores(genes: List[Gene], score_df: pd.DataFrame, is_ref: bool) -> None:
     """
     Update all Gene objects in the list with best hit ID and identity score.
     """
@@ -49,15 +47,15 @@ def add_identity_scores(
         gene.set_identity_scores(score_df, is_ref)
 
 
-def summarize_overlaps(
-    groups: List[OverlapGroup], output_path: Optional[str] = None
-) -> None:
+def summarize_overlaps(groups: List[OverlapGroup], span_type: str, output_path: Optional[str] = None) -> None:
     """
     Summarize a list of OverlapGroups into a DataFrame and write it to a TSV file or print it.
 
     """
     summary_rows = [group.summarize() for group in groups]
     df = pd.DataFrame(summary_rows)
+
+    df.insert(0, "span_type", span_type)
 
     if output_path:
         df.to_csv(output_path, sep="\t", index=False)

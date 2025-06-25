@@ -38,8 +38,8 @@ class OverlapGroup:
         return {
             "ref_gene_ids": [g.id for g in self.ref_genes],
             "pred_gene_ids": [g.id for g in self.pred_genes],
-            "ref_gene_coords": [f"{g.start}-{g.end}" for g in self.ref_genes],
-            "pred_gene_coords": [f"{g.start}-{g.end}" for g in self.pred_genes],
+            "ref_gene_coords": [f"{g.span_start}-{g.span_end}" for g in self.ref_genes],
+            "pred_gene_coords": [f"{g.span_start}-{g.span_end}" for g in self.pred_genes],
             "ref_cds_lengths": [g.protein.cds_length() for g in self.ref_genes],
             "pred_cds_lengths": [g.protein.cds_length() for g in self.pred_genes],
             "ref_cds_counts": [g.protein.cds_count() for g in self.ref_genes],
@@ -105,7 +105,7 @@ class OverlapGroup:
         """
         tree = IntervalTree()
         for gene in ref_genes + pred_genes:
-            start, end = sorted((gene.start, gene.end))
+            start, end = sorted((gene.span_start, gene.span_end))
             tree.add(Interval(start, end, gene))
         return tree
 
