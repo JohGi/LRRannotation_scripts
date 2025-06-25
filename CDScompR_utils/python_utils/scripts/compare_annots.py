@@ -5,7 +5,6 @@ Compare expert and predicted GFF annotations by overlapping genes and summarize 
 Adds best hit info and identity score from CDScompR CSV output.
 """
 import argparse
-#import pandas as pd
 import sys, os
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
@@ -37,6 +36,7 @@ def main():
 
     if args.cdscompr_csv:
         score_df = load_score_file(args.cdscompr_csv)
+        print("Adding identity scores...")
         add_identity_scores(ref_genes, score_df, is_ref=True)
         add_identity_scores(pred_genes, score_df, is_ref=False)
 

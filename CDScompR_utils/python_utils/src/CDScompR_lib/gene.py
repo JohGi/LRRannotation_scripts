@@ -1,5 +1,4 @@
 import gffutils
-import pandas as pd
 from typing import Optional
 from attrs import define
 from .protein import Protein
@@ -17,18 +16,15 @@ class Gene:
     best_hit_id: Optional[str] = None
     identity_score: Optional[float] = None
 
-    def set_identity_scores(self, score_df: pd.DataFrame, is_ref: bool) -> None:
-        """
-        Update this Gene with best hit ID and identity score from a CDScompR score dataframe.
-        """
-        self_id_col = "ref_id" if is_ref else "alt_id"
-        best_hit_id_col = "alt_id" if is_ref else "ref_id"
 
-        score_row = score_df[score_df[self_id_col] == self.id]
-        if not score_row.empty:
-            self.best_hit_id = score_row.iloc[0][best_hit_id_col]
-            score_value = score_row.iloc[0]["identity_score"]
-            self.identity_score = float(score_value) if pd.notna(score_value) else None
+    def set_identity_scores(self, score_lookup: dict[str, tuple[str, float]]) -> None:
+        """
+        Set the best hit ID and identity score for this Gene from a lookup dictionary.
+        """
+        if self.id in score_lookup:
+            best_hit_id, identity_score = score_lookup[self.id]
+            self.best_hit_id = best_hit_id
+            self.identity_score = identity_score
 
 
     @staticmethod

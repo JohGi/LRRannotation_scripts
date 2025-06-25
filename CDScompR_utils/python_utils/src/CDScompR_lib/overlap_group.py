@@ -45,10 +45,10 @@ class OverlapGroup:
             "ref_cds_counts": [g.protein.cds_count() for g in self.ref_genes],
             "pred_cds_counts": [g.protein.cds_count() for g in self.pred_genes],
             "ref_best_hits": [
-                f"{g.best_hit_id}: {g.identity_score}" for g in self.ref_genes
+                f"{g.best_hit_id or '<NA>'}: {g.identity_score}" for g in self.ref_genes
             ],
             "pred_best_hits": [
-                f"{g.best_hit_id}: {g.identity_score}" for g in self.pred_genes
+                f"{g.best_hit_id or '<NA>'}: {g.identity_score}" for g in self.pred_genes
             ],
             "type": self.get_type(),
         }
