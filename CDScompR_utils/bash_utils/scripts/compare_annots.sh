@@ -138,7 +138,10 @@ summarize_overlap_types() {
     )
 
     if [[ -n "$match_mean_score" ]]; then
-        sed -i "/^match:/ s/$/ $match_mean_score\n--- including ${nb_match_with_overlap} match(es) with a 0.00% score with overlapping CDS\n--- including ${nb_match_without_overlap} match(es) with a 0.00% score with no overlapping CDS (not detected by CDScompR)/" "$output"
+        sed -i "/^match:/ s/$/ $match_mean_score\n--- including ${nb_match_with_overlap} match(es) with a 0.00% score, overlapping according to CDScompR/" "$output"
+    fi
+    if [[ "$nb_match_without_overlap" -ne 0 ]]; then
+        echo -e "\nWARNING: ${nb_match_without_overlap} match(es) were not detected by CDScompR and appear with a score of 0.00%" >>"$output"
     fi
 }
 
