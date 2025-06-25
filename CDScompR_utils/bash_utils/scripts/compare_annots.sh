@@ -46,10 +46,11 @@ import_and_check_variables() {
   REF_GFF=$(realpath $2)
   ALT_GFF=$(realpath $3)
   SPAN_TYPE=$4
-  OUTPUT_SUFFIX=$5
-  OUT_DIR=$6
+  REF_NAME=$5
+  ALT_NAME=$6
+  OUT_DIR=$7
 
-  if [[ "${7:-}" == "--debug" ]]; then
+  if [[ "${8:-}" == "--debug" ]]; then
     echo "Debug mode"
     set -xv
   fi
@@ -58,12 +59,13 @@ import_and_check_variables() {
   check_files_exist "$CONFIG_FILE"
   source "${CONFIG_FILE}"
 
-  check_variables_exist GMT_DIR GMT_SIF PYTHON_LIBS_SIF CDSCOMPR_DIR REF_GFF ALT_GFF OUTPUT_SUFFIX OUT_DIR SPAN_TYPE
+  check_variables_exist GMT_DIR GMT_SIF PYTHON_LIBS_SIF CDSCOMPR_DIR REF_GFF ALT_GFF REF_NAME ALT_NAME OUT_DIR SPAN_TYPE
   check_files_exist "$GMT_SIF" "$PYTHON_LIBS_SIF" "$REF_GFF" "$ALT_GFF"
   check_folders_exist "$GMT_DIR" "$CDSCOMPR_DIR"
 
   SCRIPT_DIR="$(dirname "$(realpath "$0")")"
   CDSCOMPR_UTILS_DIR=$(realpath ${SCRIPT_DIR}/../..)
+  OUTPUT_SUFFIX=${REF_NAME}_vs_${ALT_NAME}
 }
 
 sort_gffs() {
@@ -74,9 +76,9 @@ sort_gffs() {
   mkdir -p "${out_dir}/01_sorted_input_gffs"
 
   local ref_sorted="${out_dir}/01_sorted_input_gffs/ref_"$(basename "$ref_gff" .gff)"_sorted.gff"
-  singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$ref_gff" -o "${ref_sorted}"
+  #singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$ref_gff" -o "${ref_sorted}"
   local alt_sorted="${out_dir}/01_sorted_input_gffs/alt_"$(basename "$alt_gff" .gff)"_sorted.gff"
-  singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$alt_gff" -o "${alt_sorted}"
+  #singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$alt_gff" -o "${alt_sorted}"
   echo $(realpath "$ref_sorted" "$alt_sorted")
 }
 
@@ -86,20 +88,26 @@ run_CDScompR() {
   local suffix=$3
   local out_dir=$(realpath $4)
 
-  cd "${out_dir}" 
-  (
-    cd "${out_dir}" || exit 1
-    singularity exec "$PYTHON_LIBS_SIF" python3 "${CDSCOMPR_DIR}/CDScompR.py" \
-        --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" \
-        >CDScompR.log 2>&1
-  ) || {
-    echo "Error: CDScompR.py failed. Check ${out_dir}/CDScompR.log for details." >&2
-    exit 1
-  }
-  cd - >/dev/null
-  mv ${out_dir}/results ${out_dir}/02_CDScompR_results
-  awk -F ',' '{if (NR > 1 && $3 != "~" && $4 != "~"){print $7}}' ${out_dir}/02_CDScompR_results/*.csv | sort -n | uniq -c >${out_dir}/02_CDScompR_results/${suffix}_overlaping_genes_score_distr.txt
-  echo $(realpath "${out_dir}/02_CDScompR_results/*.csv")
+  #cd "${out_dir}" 
+  # (
+  #   cd "${out_dir}" || exit 1
+  #   singularity exec "$PYTHON_LIBS_SIF" python3 "${CDSCOMPR_DIR}/CDScompR.py" \
+  #       --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" \
+  #       >CDScompR.log 2>&1
+  # ) || {
+  #   echo "Error: CDScompR.py failed. Check ${out_dir}/CDScompR.log for details." >&2
+  #   exit 1
+  # }
+  # cd - >/dev/null
+  # mv ${out_dir}/results ${out_dir}/02_CDScompR_results
+  
+  # awk -F ',' '{if (NR > 1 && $3 != "~" && $4 != "~"){print $7}}' ${out_dir}/02_CDScompR_results/*.csv | sort -n | uniq -c >${out_dir}/02_CDScompR_results/${suffix}_overlaping_genes_score_distr.txt
+  
+  cdscompr_csv_output=$(realpath "${out_dir}/02_CDScompR_results/*.csv")
+
+  singularity exec "$PYTHON_LIBS_SIF" python3 "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/plot_identity_hist.py" --csv $cdscompr_csv_output --ref-name ${REF_NAME} --alt-name ${ALT_NAME} --output ${out_dir}/02_CDScompR_results/${suffix}_overlaping_genes_score_hist.png
+
+  echo $cdscompr_csv_output
 }
 
 summarize_overlap_types() {
@@ -155,11 +163,11 @@ main() {
   read sorted_ref_gff sorted_alt_gff < <(sort_gffs "$REF_GFF" "$ALT_GFF" "$OUT_DIR")
 
   CDScompR_output_csv=$(run_CDScompR "${sorted_ref_gff}" "${sorted_alt_gff}" "${OUTPUT_SUFFIX}" "${OUT_DIR}")
-
+  
   mkdir -p "${OUT_DIR}/03_overlaps"
-  singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
+  #singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
 
-  summarize_overlap_types "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_summary.tsv"
+  #summarize_overlap_types "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_summary.tsv"
 }
 
 main "$@"
