@@ -41,6 +41,14 @@ check_folders_exist() {
   done
 }
 
+contains_arg() {
+  local option=$1
+  shift
+  local args="$@"
+
+  echo "$args" | grep -qw -- "$option"
+}
+
 import_and_check_variables() {
   CONFIG_FILE=$(realpath $1)
   REF_GFF=$(realpath $2)
@@ -49,8 +57,10 @@ import_and_check_variables() {
   REF_NAME=$5
   ALT_NAME=$6
   OUT_DIR=$7
+  shift 7 
+  OPT_ARGS="${@}"
 
-  if [[ "${8:-}" == "--debug" ]]; then
+  if contains_arg "--debug" "${OPT_ARGS}"; then
     echo "Debug mode"
     set -xv
   fi
@@ -163,10 +173,13 @@ main() {
 
   CDScompR_output_csv=$(run_CDScompR "${sorted_ref_gff}" "${sorted_alt_gff}" "${OUTPUT_SUFFIX}" "${OUT_DIR}")
   
-  mkdir -p "${OUT_DIR}/03_overlaps"
-  singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
+  if contains_arg "--overlaps" "${OPT_ARGS}"; then
+  #if [[ " ${OPT_ARGS[*]} " =~ [[:space:]]--overlaps[[:space:]] ]]; then
+    mkdir -p "${OUT_DIR}/03_overlaps"
+    singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
 
-  summarize_overlap_types "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_summary.tsv"
+    summarize_overlap_types "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_summary.tsv"
+  fi
 }
 
 main "$@"
