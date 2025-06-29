@@ -1,0 +1,10 @@
+Chromosome,Cluster name,Reference locus,Alternative locus,Comparison matches,Comparison mismatches,Identity score (%),Reference start,Reference end,Alternative start,Alternative end,Reference mRNA,Alternative mRNA,Exon_intron (EI) non-correspondance zones,Reading frame (RF) non-correspondance zones,Exon_Intron (EI) mismatches,Reading Frame (RF) mismatches,reference mRNA number,alternative mRNA number
+chr1_direct,cluster 0,Gene1,Pred1,76,76,50.0,100,300,100,300,Gene1.mRNA,Pred1.mRNA,[120//124] [176//180] [190//199] [276//280] ,[125//175] ,25,51,1,1
+chr1_direct,cluster 2,Gene2,Pred2a,0,157,0.0,400,600,400,500,Gene2.mRNA,Pred2a.mRNA,[420//424] [466//479] [481//495] [500//580] ,[425//465] [480//480] ,115,42,1,1
+chr1_direct,cluster 2,~,Pred2b,_,_,0.0,_,_,500,600,_,Pred2b.mRNA,_,_,_,_,_,1
+chr1_direct,cluster 5,Gene3,Pred3,0,52,0.0,700,800,700,800,Gene3.mRNA,Pred3.mRNA,[720//724] [756//760] [776//780] ,[725//755] [770//775] ,15,37,1,1
+chr1_direct,cluster 7,Gene4,Pred4b,1,102,1.0,900,1000,950,1050,Gene4.mRNA,Pred4b.mRNA,[920//950] [955//965] [970//979] [981//1030] ,,102,0,1,1
+chr1_direct,cluster 7,~,Pred4a,_,_,0.0,_,_,900,1000,_,Pred4a.mRNA,_,_,_,_,_,1
+chr1_direct,cluster 10,Gene5,Pred5,0,73,0.0,1100,1200,1150,1250,Gene5.mRNA,Pred5.mRNA,[1120//1150] [1181//1200] [1220//1230] ,[1170//1180] ,62,11,1,1
+chr1_direct,cluster 12,Gene6,~,_,_,0.0,1300,1400,_,_,Gene6.mRNA,_,_,_,_,_,1,_
+chr1_direct,cluster 13,~,Pred7,_,_,0.0,_,_,1500,1600,_,Pred7.mRNA,_,_,_,_,_,1
