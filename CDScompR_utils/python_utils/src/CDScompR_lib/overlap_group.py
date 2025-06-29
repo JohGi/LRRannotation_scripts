@@ -38,10 +38,10 @@ class OverlapGroup:
         return {
             "ref_gene_ids": [g.id for g in self.ref_genes],
             "pred_gene_ids": [g.id for g in self.pred_genes],
-            "ref_gene_coords": [f"{g.span_start}-{g.span_end}" for g in self.ref_genes],
-            "pred_gene_coords": [f"{g.span_start}-{g.span_end}" for g in self.pred_genes],
-            "ref_cds_lengths": [g.protein.cds_length() for g in self.ref_genes],
-            "pred_cds_lengths": [g.protein.cds_length() for g in self.pred_genes],
+            "ref_span_coords": [f"{g.span_start}-{g.span_end}" for g in self.ref_genes],
+            "pred_span_coords": [f"{g.span_start}-{g.span_end}" for g in self.pred_genes],
+            "ref_cumul_cds_lengths": [g.protein.cds_length() for g in self.ref_genes],
+            "pred_cumul_cds_lengths": [g.protein.cds_length() for g in self.pred_genes],
             "ref_cds_counts": [g.protein.cds_count() for g in self.ref_genes],
             "pred_cds_counts": [g.protein.cds_count() for g in self.pred_genes],
             "ref_best_hits": [
