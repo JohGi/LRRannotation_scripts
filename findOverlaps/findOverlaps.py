@@ -8,13 +8,14 @@ import os
 class Gene:
     instances = []
 
-    def __init__(self, gene_id, start, end, dna_mol, gene_class=None, gene_fam=None, gene_source=None):
+    def __init__(self, gene_id, start, end, dna_mol, gene_class=None, gene_fam=None, gene_origin=None, gene_source=None):
         self.gene_id = gene_id
         self.start = start
         self.end = end
         self.dna_mol = dna_mol
         self.gene_class = gene_class
         self.gene_fam = gene_fam
+        self.gene_origin = gene_origin
         self.gene_source = gene_source
         self.overlapping_genes = []  # List of overlapping genes in the other GFF
         self.num_overlapping_genes = 0  # Count of overlapping genes
@@ -36,6 +37,7 @@ class Gene:
         print(f"DNA Mol: {self.dna_mol}")
         print(f"Gene Class: {self.gene_class}")
         print(f"Gene Family: {self.gene_fam}")
+        print(f"Gene Origin: {self.gene_origin}")
         print(f"Gene Source: {self.gene_source}")
         print(f"Overlapping Genes: {self.get_overlapping_gene_ids()}")
         print(f"Number of Overlapping Genes: {self.num_overlapping_genes}")
@@ -174,6 +176,7 @@ def read_gff(gff_path, source):
             # Extract extra info from the attributes field (ie the class and confidence if they can be found)
             gene_class = None
             gene_fam = None
+            gene_origin = None
             gene_source = source
             for attr in attributes.split(';'):
                 if attr.startswith('comment='):
@@ -183,12 +186,14 @@ def read_gff(gff_path, source):
                             gene_class = item.split(':')[1].strip()
                         if item.startswith('Fam:'):
                             gene_fam = item.split(':')[1].strip()
+                        if item.startswith('Origin:'):
+                            gene_origin = item.split(':')[1].strip()
                 if attr.startswith('confidence='):
                     confidence = attr.replace('confidence=', '')
                     gene_source = f"{gene_source}_{confidence}"
 
             # Instantiate the gene
-            gene = Gene(gene_id, int(start), int(end), dna_mol, gene_class, gene_fam, gene_source)
+            gene = Gene(gene_id, int(start), int(end), dna_mol, gene_class, gene_fam, gene_origin, gene_source)
 
             # Update gff_dict
             if dna_mol not in gff_dict:
@@ -234,13 +239,14 @@ def find_overlaps(ref_gff_dict, alt_gff_dict, alt_prefix, verbose=False):
                 ref_gene.gene_id,
                 ref_gene.gene_class,
                 ref_gene.gene_fam,
+                ref_gene.gene_origin,
                 ref_gene.num_overlapping_genes,
                 f"[{overlapping_gene_ids}]",
                 num_overlaps_alt_genes
             ))
 
 
-    results_df = pd.DataFrame(results, columns=['REF_gene_id', 'REF_gene_class', 'REF_gene_fam', f'REF_num_overlaps_{alt_prefix}', f'{alt_prefix}_overlaps_id', f'{alt_prefix}_num_overlaps'])
+    results_df = pd.DataFrame(results, columns=['REF_gene_id', 'REF_gene_class', 'REF_gene_fam', 'REF_gene_origin', f'REF_num_overlaps_{alt_prefix}', f'{alt_prefix}_overlaps_id', f'{alt_prefix}_num_overlaps'])
 
     # delete potential duplicated rows (it can happen when an input gff contains duplicated genes by mistake)
     results_df.drop_duplicates(subset=['REF_gene_id', 'REF_gene_class', 'REF_gene_fam'], inplace=True)
