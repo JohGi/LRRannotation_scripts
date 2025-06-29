@@ -6,8 +6,6 @@ from .protein import Protein
 @define
 class Gene:
     id: str
-    #start: int
-    #end: int
     span_start: int
     span_end: int
     protein: Protein

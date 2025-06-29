@@ -1,0 +1,10 @@
+{
+    "python.testing.pytestArgs": [
+        "python_utils"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.analysis.extraPaths": [
+        "./python_utils/src"
+    ]
+}

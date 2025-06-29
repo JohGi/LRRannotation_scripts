@@ -1,0 +1,7 @@
+span_type	ref_gene_ids	pred_gene_ids	ref_span_coords	pred_span_coords	ref_cumul_cds_lengths	pred_cumul_cds_lengths	ref_cds_counts	pred_cds_counts	ref_best_hits	pred_best_hits	type
+CDS	['Gene6', 'Gene7']	['Pred4b', 'Pred4a']	['1170-1200', '1230-1280']	['1230-1380', '1170-1310']	[31, 51]	[142, 132]	[1, 1]	[2, 2]	['<NA>: 0.0', '<NA>: None']	['Gene4: 1.0', '<NA>: 0.0']	complex
+CDS	['Gene2']	['Pred2b', 'Pred2a']	['420-580']	['525-575', '425-495']	[142]	[37, 57]	[2]	[2, 2]	['Pred2a: 0.0']	['<NA>: 0.0', 'Gene2: 0.0']	split
+CDS	['Gene1']	['Pred1']	['120-280']	['125-275']	[142]	[137]	[2]	[2]	['Pred1: 50.0']	['Gene1: 50.0']	match
+CDS	['Gene4', 'Gene5']	['Pred3']	['920-990', '1030-1110']	['925-1110']	[62, 72]	[177]	[2, 2]	[2]	['Pred4b: 1.0', 'Pred5: 0.0']	['Gene3: 0.0']	fusion
+CDS	[]	['Pred5']	[]	['1520-1580']	[]	[42]	[]	[2]	[]	['Gene5: 0.0']	appearance
+CDS	['Gene3']	[]	['720-780']	[]	[61]	[]	[1]	[]	['Pred3: 0.0']	[]	disappearance
