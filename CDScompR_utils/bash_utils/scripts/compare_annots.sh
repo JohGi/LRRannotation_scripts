@@ -174,7 +174,6 @@ main() {
   CDScompR_output_csv=$(run_CDScompR "${sorted_ref_gff}" "${sorted_alt_gff}" "${OUTPUT_SUFFIX}" "${OUT_DIR}")
   
   if contains_arg "--overlaps" "${OPT_ARGS}"; then
-  #if [[ " ${OPT_ARGS[*]} " =~ [[:space:]]--overlaps[[:space:]] ]]; then
     mkdir -p "${OUT_DIR}/03_overlaps"
     singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
 
