@@ -15,6 +15,7 @@ set -euo pipefail
 
 # To-do:
 # - check that sorting is unnecessary before running CDScompare (last version) and remove unneeded GMT_DIR and GMT_SIF
+# - check that sorting is also unnecessary before running compare_annots.py (otherwise use sort_gffs before)
 
 ## Functions
 check_variables_exist() {
@@ -96,15 +97,15 @@ import_and_check_variables() {
 # }
 
 run_CDScompR() {
-  local sorted_ref_gff=$(realpath $1)
-  local sorted_alt_gff=$(realpath $2)
+  local ref_gff=$(realpath $1)
+  local alt_gff=$(realpath $2)
   local suffix=$3
   local out_dir=$(realpath $4)
 
   (
 
     singularity exec "$PYTHON_LIBS_SIF" python3 "${CDSCOMPR_DIR}/CDScompare.py" \
-        --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" --out_dir "${out_dir}/02_CDScompR_results"\
+        --reference "$ref_gff" --alternative "$alt_gff" --out_dir "${out_dir}/02_CDScompR_results"\
         >CDScompR.log 2>&1
   ) || {
     echo "Error: CDScompR.py failed. Check ${out_dir}/CDScompR.log for details." >&2
@@ -177,7 +178,8 @@ main() {
   
   if contains_arg "--overlaps" "${OPT_ARGS}"; then
     mkdir -p "${OUT_DIR}/03_overlaps"
-    singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
+    #singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "${sorted_ref_gff}" --pred_gff "${sorted_alt_gff}" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
+    singularity run "$PYTHON_LIBS_SIF" "${CDSCOMPR_UTILS_DIR}/python_utils/scripts/compare_annots.py" --ref_gff "$REF_GFF" --pred_gff "$ALT_GFF" --cdscompr_csv "${CDScompR_output_csv}" --span_type "${SPAN_TYPE}" -o "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" 2>&1 | tee "${OUT_DIR}/overlaps.log"
 
     summarize_overlap_types "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_overlaps.tsv" "${OUT_DIR}/03_overlaps/${OUTPUT_SUFFIX}_summary.tsv"
   fi
