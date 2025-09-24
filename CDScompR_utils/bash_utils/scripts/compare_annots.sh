@@ -11,7 +11,10 @@ set -euo pipefail
 # PYTHON_LIBS_SIF: path to python libraries .sif (compare_annots.py and CDScompR dependencies)
 # CDSCOMPR_DIR: path to CDScompR cloned repo
 
-module load singularity/3.6.3
+#module load singularity/3.6.3
+
+# To-do:
+# - check that sorting is unnecessary before running CDScompare (last version) and remove unneeded GMT_DIR and GMT_SIF
 
 ## Functions
 check_variables_exist() {
@@ -78,19 +81,19 @@ import_and_check_variables() {
   OUTPUT_SUFFIX=${REF_NAME}_vs_${ALT_NAME}
 }
 
-sort_gffs() {
-  local ref_gff=$1
-  local alt_gff=$2
-  local out_dir=$3
+# sort_gffs() {
+#   local ref_gff=$1
+#   local alt_gff=$2
+#   local out_dir=$3
 
-  mkdir -p "${out_dir}/01_sorted_input_gffs"
+#   mkdir -p "${out_dir}/01_sorted_input_gffs"
 
-  local ref_sorted="${out_dir}/01_sorted_input_gffs/ref_"$(basename "$ref_gff" .gff)"_sorted.gff"
-  singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$ref_gff" -o "${ref_sorted}"
-  local alt_sorted="${out_dir}/01_sorted_input_gffs/alt_"$(basename "$alt_gff" .gff)"_sorted.gff"
-  singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$alt_gff" -o "${alt_sorted}"
-  echo $(realpath "$ref_sorted" "$alt_sorted")
-}
+#   local ref_sorted="${out_dir}/01_sorted_input_gffs/ref_"$(basename "$ref_gff" .gff)"_sorted.gff"
+#   singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$ref_gff" -o "${ref_sorted}"
+#   local alt_sorted="${out_dir}/01_sorted_input_gffs/alt_"$(basename "$alt_gff" .gff)"_sorted.gff"
+#   singularity exec "$GMT_SIF" python3 "${GMT_DIR}/SCRIPT/sort_gff.py" -g "$alt_gff" -o "${alt_sorted}"
+#   echo $(realpath "$ref_sorted" "$alt_sorted")
+# }
 
 run_CDScompR() {
   local sorted_ref_gff=$(realpath $1)
@@ -98,17 +101,15 @@ run_CDScompR() {
   local suffix=$3
   local out_dir=$(realpath $4)
 
-  cd "${out_dir}" 
   (
-    singularity exec "$PYTHON_LIBS_SIF" python3 "${CDSCOMPR_DIR}/CDScompR.py" \
-        --verbose --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" \
+
+    singularity exec "$PYTHON_LIBS_SIF" python3 "${CDSCOMPR_DIR}/CDScompare.py" \
+        --reference "$sorted_ref_gff" --alternative "$sorted_alt_gff" --out_dir "${out_dir}/02_CDScompR_results"\
         >CDScompR.log 2>&1
   ) || {
     echo "Error: CDScompR.py failed. Check ${out_dir}/CDScompR.log for details." >&2
     exit 1
   }
-  cd - >/dev/null
-  mv ${out_dir}/results ${out_dir}/02_CDScompR_results
   
   awk -F ',' '{if (NR > 1 && $3 != "~" && $4 != "~"){print $7}}' ${out_dir}/02_CDScompR_results/*.csv | sort -n | uniq -c >${out_dir}/02_CDScompR_results/${suffix}_overlaping_genes_score_distr.txt
   
@@ -169,9 +170,10 @@ main() {
   source ${GMT_DIR}/bin/lib_gff_comment.sh
 
   mkdir -p "${OUT_DIR}"
-  read sorted_ref_gff sorted_alt_gff < <(sort_gffs "$REF_GFF" "$ALT_GFF" "$OUT_DIR")
+  # read sorted_ref_gff sorted_alt_gff < <(sort_gffs "$REF_GFF" "$ALT_GFF" "$OUT_DIR")
 
-  CDScompR_output_csv=$(run_CDScompR "${sorted_ref_gff}" "${sorted_alt_gff}" "${OUTPUT_SUFFIX}" "${OUT_DIR}")
+  # CDScompR_output_csv=$(run_CDScompR "${sorted_ref_gff}" "${sorted_alt_gff}" "${OUTPUT_SUFFIX}" "${OUT_DIR}")
+  CDScompR_output_csv=$(run_CDScompR "$REF_GFF" "$ALT_GFF" "${OUTPUT_SUFFIX}" "${OUT_DIR}")
   
   if contains_arg "--overlaps" "${OPT_ARGS}"; then
     mkdir -p "${OUT_DIR}/03_overlaps"
