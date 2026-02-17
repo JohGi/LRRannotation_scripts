@@ -14,7 +14,7 @@ def plot_identity_hist_from_csv(csv, ref_name, alt_name, out_path):
         out_path (str): Output file path
     """
 
-    cols = ["Reference locus", "Alternative locus", "Identity score (%)"]
+    cols = ["annot1_gene", "annot2_gene", "identity_score"]
     df = pl.read_csv(csv, null_values=["~"], columns=cols)
     ref_col, alt_col, score_col = cols
 
